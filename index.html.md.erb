@@ -3,7 +3,19 @@ title: Logging and Metrics
 owner: Logging and Metrics
 ---
 
-Loggregator is the next generation system for aggregating and streaming logs and metrics from all of the user apps and system components in <%=vars.product_full%>.
+Loggregator is the next generation system for aggregating and streaming logs and metrics from all of the user apps and system components in a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %> <%= vars.product_full %> deployment.
+
+[Loggregator on GitHub](https://github.com/cloudfoundry/loggregator)
+
+# <a id='use-cases'></a> Using Loggregator
+
+The main use cases are as follows:
+
+- App developers can tail their application logs or dump the recent logs from the CF CLI, or stream these to a third party log archive and analysis service.
+
+- Operators and administrators can access the **Loggregator [Firehose](./architecture.html#firehose)**, the combined stream of logs from all apps, plus metrics data from CF components.
+
+- Operators can deploy [nozzles](./architecture.html#nozzles) to the Firehose. A nozzle is a component that listens to the Firehose for specified events and metrics and streams this data to external services.
 
 ## Table of Contents
 
