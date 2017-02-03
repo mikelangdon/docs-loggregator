@@ -1,30 +1,8 @@
-## Pivotal Cloud Foundry Partners Template
-
-This template helps partners prepare documentation for Pivotal Cloud Foundry (PCF) partner services that appear on [Pivotal Network](https://network.pivotal.io/). 
+## Cloud Foundry Docs Template
 
 ### <a id='overview'></a>Overview
 
 Every partner service in PCF is documented on our PCF documentation site. The links to these partner service docs appear on the [front page](http://docs.pivotal.io) under **Partner Services for Pivotal Cloud Foundry**.
-
-For a good example of a partner service doc, see [ISS Knowtify Search Analytics](http://docs.pivotal.io/knowtify/index.html).
-
-### <a id='template'></a>How To Use This Template
-
-Partners use this template to develop the documentation for their PCF service. This repo currently includes templates for the following topics:
-
-* [index.html.md.erb](./docs-content/index.html.md.erb): The index of your docs.
-* [installing.html.md.erb](./docs-content/installing.html.md.erb): How to install and configure your product tile.
-* [using.html.md.erb](./docs-content/using.html.md.erb): How to use your product.
-* [release-notes.html.md.erb](./docs-content/release-notes.html.md.erb): Release notes for your product.
-
-To begin using this repo to develop your documentation, perform the following steps:
-
-1. Make a fork of this repo.
-1. Clone your fork onto your local machine.
-1. Work your way through each topic, replacing the placeholders in ALL-CAPS and following the instructions in **bold**. 
-1. Complete the subnav by replacing the placeholders in ALL-CAPS in the subnav file at `docs-book/master_middleman/source/subnavs/myservice_subnav.erb` in this repo.
-1. View your documentation as a live local site in a browser, by following the steps below in the [How To Use Bookbinder To View Your Docs](#bookbinder) section.
-1. When you've finished your documentation, make a pull request to merge your fork into this repo and email the PCF Docs Team at cf-docs@pivotal.io.
 
 ### <a id='bookbinder'></a>How To Use Bookbinder To View Your Docs
 
@@ -135,10 +113,6 @@ In Terminal window:
    `$ bundle exec bookbinder watch`
    
 1. Browse to `localhost:4567` to view the book locally and "watch" any changes that you make to source `html.md.erb` files. As you make and save changes to the local source files for your site, you will see them in your browser after a slight delay.
-
-![Partner Template landing page](docs-book/master_middleman/source/images/partner-template-landing.png)
-
-![Partner Template service index page](docs-book/master_middleman/source/images/partner-template-service-index.png)
 
 After each session of writing or revising your docs source files, commit and push them to your github repo.
 
