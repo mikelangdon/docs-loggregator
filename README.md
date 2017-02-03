@@ -1,9 +1,5 @@
 ## Cloud Foundry Docs Template
 
-### <a id='overview'></a>Overview
-
-Every partner service in PCF is documented on our PCF documentation site. The links to these partner service docs appear on the [front page](http://docs.pivotal.io) under **Partner Services for Pivotal Cloud Foundry**.
-
 ### <a id='bookbinder'></a>How To Use Bookbinder To View Your Docs
 
 [Bookbinder](https://github.com/pivotal-cf/bookbinder/blob/master/README.md) is a command-line utility for stitching Markdown docs into a hostable web app. The PCF Docs Team uses Bookbinder to publish our docs site, but you can also use Bookbinder to view a live version of your documentation on your local machine.
