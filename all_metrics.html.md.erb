@@ -7,6 +7,54 @@ owner: Logging and Metrics
 
 <a id='top'></a>This topic lists and describes the metrics available for <%=vars.first_product_name%> system components. These metrics are streamed from the Loggregator [Firehose](./architecture.html).
 
+##<a id='AuctioneerLRPAuctionsFailed'></a>auctioneer.AuctioneerLRPAuctionsFailed
+
+<strong>Description</strong>: Cumulative number of LRP instances that the auctioneer failed to place on Diego cells. Emitted every during each auction.
+
+<strong>Why a KPI?</strong>:
+Indicates PCF can’t place an app because it is out of container space. Indicates a lack of enough resources within your environment (could be several different resource types at root of issue).</td>
+
+
+<table border="1" class="nice">
+	<tr>
+		<th>Push/Pull Source</th>
+		<th>Component Subsystem</th>
+		<th>Source</th>
+		<th>Type</th>
+		<th>Frequency</th>
+	</tr><tr>
+		<td>Doppler/Firehose</td>
+		<td>Diego</td>
+		<td>Auctioneer</td>
+		<td>Counter (Integer)</td>
+		<td>During Event</td>
+	</tr>
+</table>
+
+<strong>Suggested Measurement</strong>:
+per minute average of auctioneer.AuctioneerLRPAuctionsFailed
+
+<table border="1" class="nice"><tr>
+		<th>Measurement Type</th>
+		<th width=75%>Suggested Response Actions</th>
+	</tr></tr>
+		<td>avg</td>
+		<td rowspan=7>This error is most common due to capacity issues, whether cells do not have enough resources, or cells are blipping in and out of health. Investigate the health of Diego cells. Then consider scaling additional cells via Ops Manager. If scaling cells doesn't solve the problem, then get logs from the brain VM and bbs node for troubleshooting, and open ticket with PCF Support indicating that LRP auctions are failing</td>
+	</tr><tr>
+		<th>Measurement Window</th>
+	</tr><tr>
+		<td>5 minute</td>
+	</tr><tr>
+		<th>Yellow (Warning Threshold)</th>
+	</tr><tr>
+		<td>&ge; 0.5</td>
+	</tr><tr>
+		<th>Red (Critical Threshold)</th>
+	</tr><tr>
+		<td>&ge; 1</td>
+	</tr>
+</table>
+
 <%= vars.dea_metrics %> 
 
 ##<a id='cc'></a>Cloud Controller
