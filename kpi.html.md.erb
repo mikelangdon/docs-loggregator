@@ -1,0 +1,125 @@
+---
+title: Key Performance Indicators 
+owner: PCF Metrics Platform Monitoring
+---
+
+This topic describes how to use Key Performance Indicators (KPIs) to monitor your Pivotal Cloud Foundry (PCF) deployment and ensure it is in a good operational state. 
+
+## <a id="overview"></a> Overview
+
+<table>
+	<tr>
+		<th>If you want to know...</th>
+		<th>Then see...</th>
+	<tr>
+		<td>Whether or not PCF can place apps on Diego cells.</td>
+		<td><a href="#AuctioneerLRPAuctionsFailed">auctioneer.AuctioneerLRPAuctionsFailed</a></td>
+	</tr>
+	<tr>
+		<td>How Diego cells are performing.</td>
+		<td>auctioneer.AuctioneerFetchStatesDuration</td>
+	</tr>
+	<tr>
+		<td>The running system activity levels occurring in your environment</td>
+		<td>auctioneer.AuctioneerLRPAuctionsStarted</td>
+	</tr>
+	<tr>
+		<td>Whether or not PCF can place tasks on Diego cells.</td>
+		<td>auctioneer.AuctioneerTaskAuctionsFailed</td>
+	</tr>
+	<tr>
+		<td>Time in nanoseconds that the BBS took to run its LRP convergence pass.</td>
+		<td>bbs.ConvergenceLRPDuration</td>
+	</tr>
+	<tr>
+		<td>How the PCF API is performing.</td>
+		<td>bbs.RequestLatency</td>
+	</tr>
+	<tr>
+		<td>Whether the <code>cf-apps</code> domain is up-to-date.</td>
+		<td>bbs.Domain.cf-apps</td>
+	</tr>
+	<tr>
+		<td>How the BBS is performing</td>
+		<td>bbs.LRPsExtra<br>
+			bbs.LRPsMissing<br>
+			rep.RepBulkSyncDuration</td>
+	</tr>
+	<tr>
+		<td>How many app instances are crashed.</td>
+		<td>bbs.CrashedActualLRPs</td>
+	</tr>
+	<tr>
+		<td>Rate of change in app instances being started or stopped on the platform.</td>
+		<td>derived=(1hr average of bbs.LRPsRunning - prior 1hr average of bbs.LRPsRunning)</td>
+	</tr>
+	<tr>
+		<td>Rate of change in app instances being pushed or deleted on the platform. 
+</td>
+		<td>derived=(1hr average of bbs.LRPsDesired - prior 1hr average of bbs.LRPsDesired)
+</td>
+	</tr>
+	<tr>
+		<td>The available memory on Diego cells.</td>
+		<td>rep.CapacityRemainingMemory</td>
+	<tr>
+		<td>The available disk on Diego cells.</td>
+		<td>rep.CapacityRemainingDisk</td>
+	</tr>
+		</tr>
+	<tr>
+		<td>The available memory on Diego cells.</td>
+		<td>rep.CapacityRemainingMemory</td>
+	</tr>
+</table>
+
+## <a id="auctioneer"></a> Diego Auctioneer
+ 
+<a name="AuctioneerLRPAuctionsFailed"></a>
+
+<table>
+    <tr><th colspan="2" style="text-align: center;"><br> auctioneer.AuctioneerLRPAuctionsFailed<br><br></th></tr>
+	<tr>
+		<th width="25%">Description</th>
+		<td>The cumulative number of LRP instances that the auctioneer failed to place on Diego cells <br><br>
+		
+		This metric can indicates that PCF is out of container space or that there is a lack of resources within your environment.
+
+		This error is most common due to capacity issues, for example, if cells do not have 
+		enough resources or if cells are blipping in and out of health.
+		 <br><br>
+		<strong>Origin</strong>: Doppler/Firehose<br>
+		<strong>Type</strong>: Counter, integer<br>
+		<strong>Frequency</strong>: During each auction<br>
+	</tr>
+	<tr>
+		<th>Recommended measurement</th>
+		<td>Per minute average over a 5 minute window</td>
+	</tr>
+	<tr>
+		<th>Recommended alert thresholds</th>
+		<td><strong>Yellow Warning</strong>: &ge; 0.5<br>
+		<strong>Red Critical</strong>: &ge; 1</td>
+	</tr>
+	<tr>
+		<th>Recommended response</th>
+		<td>
+			Do the following:<br><br>
+		    <ol>
+		    	<li>Investigate the health of your Diego cells to determine if they
+		    	are the resource type causing the problem.</li> 
+		    	<li>Consider scaling additional cells
+		    		via Ops Manager.</li>
+		    	<li>If scaling cells does not solve the problem, retrieve logs
+		    		from the brain VM and bbs node and open a ticket with PCF Support indicating that LRP auctions are failing.</li>
+		    		 (could be several different resource types at root of issue).
+		    </ol>
+		    </td>
+	</tr>
+</table>
+
+## <a id="router"></a> Router
+
+## <a id="doppler-server"></a> Doppler Server
+
+## <a id="bosh"></a> System (BOSH)
