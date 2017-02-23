@@ -118,6 +118,47 @@ This topic describes how to use Key Performance Indicators (KPIs) to monitor you
 	</tr>
 </table>
 
+<a name="auctioneer.AuctioneerFetchStatesDuration"></a>
+
+<table>
+    <tr><th colspan="2" style="text-align: center;"><br>auctioneer.AuctioneerFetchStatesDuration<br><br></th></tr>
+	<tr>
+		<th width="25%">Description</th>
+		<td> Time in nanoseconds the auctioneer took to fetch state from all the cells when running its auction. Emitted during each auction<br><br>
+		
+                     Inidicates how the cells themselves are performing. Alerting on this metric will help alert that app stage requests for Diego may be failing.
+
+		 <br><br>
+		<strong>Origin</strong>: Doppler/Firehose<br>
+		<strong>Type</strong>: Counter, integer Gauge (Integer in ns)<br>
+		<strong>Frequency</strong>: During event<br>
+	</tr>
+	<tr>
+		<th>Recommended measurement</th>
+		<td> 5 minute max of auctioneer.AuctioneerFetchStatesDuration divided by 1,000,000,000 max 5 minute </td>
+	</tr>
+	<tr>
+		<th>Recommended alert thresholds</th>
+		<td><strong>Yellow Warning</strong>: &ge; 5 s<br>
+		<strong>Red Critical</strong>: &ge; 10 s</td>
+	</tr>
+	<tr>
+		<th>Recommended response</th>
+		<td>
+			Do the following:<br><br>
+		    <ol>
+		    	<li>Investigate the health of your Diego cells to determine if they
+		    	are the resource type causing the problem.</li> 
+		    	<li>Consider scaling additional cells
+		    		via Ops Manager.</li>
+		    	<li>If scaling cells does not solve the problem, retrieve logs
+		    		from the brain VM and bbs node and open a ticket with PCF Support indicating that LRP auctions are failing.</li>
+		    		 (could be several different resource types at root of issue).
+		    </ol>
+		    </td>
+	</tr>
+</table>
+
 ## <a id="router"></a> Router
 
 ## <a id="doppler-server"></a> Doppler Server
