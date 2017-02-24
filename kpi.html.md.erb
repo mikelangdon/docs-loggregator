@@ -82,7 +82,7 @@ This topic describes how to use Key Performance Indicators (KPIs) to monitor you
 	<tr>
 		<th width="25%">Description</th>
 		<td>The cumulative number of LRP instances that the auctioneer failed to place on Diego cells <br><br>
-		
+
 		This metric can indicates that PCF is out of container space or that there is a lack of resources within your environment.
 
 		This error is most common due to capacity issues, for example, if cells do not have 
@@ -130,12 +130,12 @@ This topic describes how to use Key Performance Indicators (KPIs) to monitor you
 
 		 <br><br>
 		<strong>Origin</strong>: Doppler/Firehose<br>
-		<strong>Type</strong>: Counter, integer Gauge (Integer in ns)<br>
+		<strong>Type</strong>: Gauge, integer in ns<br>
 		<strong>Frequency</strong>: During event<br>
 	</tr>
 	<tr>
 		<th>Recommended measurement</th>
-		<td> 5 minute max of auctioneer.AuctioneerFetchStatesDuration divided by 1,000,000,000 max 5 minute </td>
+		<td> 5 minute maximum divided by 1,000,000,000</td>
 	</tr>
 	<tr>
 		<th>Recommended alert thresholds</th>
@@ -147,13 +147,9 @@ This topic describes how to use Key Performance Indicators (KPIs) to monitor you
 		<td>
 			Do the following:<br><br>
 		    <ol>
-		    	<li>Investigate the health of your Diego cells to determine if they
-		    	are the resource type causing the problem.</li> 
-		    	<li>Consider scaling additional cells
-		    		via Ops Manager.</li>
-		    	<li>If scaling cells does not solve the problem, retrieve logs
-		    		from the brain VM and bbs node and open a ticket with PCF Support indicating that LRP auctions are failing.</li>
-		    		 (could be several different resource types at root of issue).
+		    	<li>Check the health of the cells by reviewing the logs and looking for errors.</li>
+		    	<li>Review IaaS console metrics.</li>
+		    	<li>Collect logs from brain VMs and cells and open ticket with PCF support indicating that fetching cell states is taking too long.</li>
 		    </ol>
 		    </td>
 	</tr>
