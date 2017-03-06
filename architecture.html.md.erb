@@ -22,7 +22,10 @@ The main use cases are as follows:
 # <a id='use-cases'></a> Loggregator Components
 
 <%= image_tag 'architecture/loggregator.png' %>
-Overview of Loggregator components
+
+To see a larger version of this diagram, click <a href="./images/architecture/loggregator.png">here</a>.
+
+<p class="note"><strong>Note</strong>: The Loggregator system now uses <a href="http://www.grpc.io/">gRPC</a> for communication between the Metron Agent and the Doppler, and between the Doppler and the Traffic Controller. This improves the stability and the performance of the Loggregator system, but it may require operators to scale their Dopplers.</p>
 
 ## <a id='sources'></a>Source
 
@@ -56,11 +59,24 @@ Example output for a BOSH Lite CF environment:
  wss://doppler.192.0.2.34.xip.io:443
 </pre>
 
+### <a id='logs-vs-metrics'></a>Difference Between Logs and Metrics
+
+The Firehose carries both logs and metrics, which differ as follows:
+
+* **Metrics**
+  - Report a measurement from or status of a VM at its timestamp time
+  - Follow [dropsonde](https://github.com/cloudfoundry/dropsonde-protocol) or [statsd](https://github.com/etsy/statsd) protocol
+  - Can route to a monitoring platform to trigger alerts
+* **Logs**
+  - Report events detected, actions taken, errors, or any other messages the operator or developer wanted to generate
+  - Follow the syslog standard
+  - Are not used to trigger alerts
 
 ## <a id='nozzles'></a> Nozzles
 
 Nozzles are programs which consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and forward it to other applications and services. For example:
 
+- The JMX Bridge OpenTSDB Firehose Nozzle, which installs with [JMX Bridge](http://docs.pivotal.io/jmx-bridge)
 - The [Datadog nozzle](https://github.com/cloudfoundry-incubator/datadog-firehose-nozzle) publishes metrics coming from the Firehose to Datadog.
 - The [Syslog nozzle](https://github.com/cloudfoundry-community/firehose-to-syslog) filters out log messages coming from the Firehose and sends it to a syslog server.
 
