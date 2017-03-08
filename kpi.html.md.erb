@@ -8,69 +8,58 @@ This topic describes how to use Key Performance Indicators (KPIs) to monitor you
 ## <a id="overview"></a> Overview
 
 <table>
-<tr>
-	<th>If you want to know...</th>
-	<th>Then see...</th>
-<tr>
-	<td>Whether or not PCF can place apps on Diego cells.</td>
-	<td><a href="#AuctioneerLRPAuctionsFailed">auctioneer.AuctioneerLRPAuctionsFailed</a></td>
-</tr>
-<tr>
-	<td>How Diego cells are performing.</td>
-	<td>auctioneer.AuctioneerFetchStatesDuration</td>
-</tr>
-<tr>
-	<td>The running system activity levels occurring in your environment</td>
-	<td>auctioneer.AuctioneerLRPAuctionsStarted</td>
-</tr>
-<tr>
-	<td>Whether or not PCF can place tasks on Diego cells.</td>
-	<td>auctioneer.AuctioneerTaskAuctionsFailed</td>
-</tr>
-<tr>
-<td>Time in nanoseconds that the BBS took to run its LRP convergence pass.</td>
-<td>bbs.ConvergenceLRPDuration</td>
-</tr>
-<tr>
-	<td>How the PCF API is performing.</td>
-	<td>bbs.RequestLatency</td>
-</tr>
-<tr>
-	<td>Whether the <code>cf-apps</code> domain is up-to-date.</td>
-	<td>bbs.Domain.cf-apps</td>
-</tr>
-<tr>
-	<td>How the BBS is performing</td>
-	<td>bbs.LRPsExtra<br>
-	bbs.LRPsMissing<br>
-	rep.RepBulkSyncDuration</td>
-</tr>
-<tr>
-	<td>How many app instances are crashed.</td>
-	<td>bbs.CrashedActualLRPs</td>
-</tr>
-<tr>
-	<td>Rate of change in app instances being started or stopped on the platform.</td>
-	<td>derived=(1hr average of bbs.LRPsRunning - prior 1hr average of bbs.LRPsRunning)</td>
-</tr>
-<tr>
-	<td>Rate of change in app instances being pushed or deleted on the platform. 
-</td>
-	<td>derived=(1hr average of bbs.LRPsDesired - prior 1hr average of bbs.LRPsDesired)
-</td>
-</tr>
-<tr>
-	<td>The available memory on Diego cells.</td>
-	<td>rep.CapacityRemainingMemory</td>
-<tr>
-	<td>The available disk on Diego cells.</td>
-	<td>rep.CapacityRemainingDisk</td>
-</tr>
-	</tr>
-<tr>
-	<td>The available memory on Diego cells.</td>
-	<td>rep.CapacityRemainingMemory</td>
-</tr>
+   <tr>
+      <th>If you want to know...</th>
+      <th>Then see...</th>
+   <tr>
+      <td>Whether or not PCF can place apps on Diego cells.</td>
+      <td><a href="#AuctioneerLRPAuctionsFailed">auctioneer.AuctioneerLRPAuctionsFailed</a></td>
+   </tr>
+   <tr>
+      <td>How Diego cells are performing.</td>
+      <td><a href="#AuctioneerFetchStatesDuration">auctioneer.AuctioneerFetchStatesDuration</a></td>
+   </tr>
+   <tr>
+      <td>The running system activity levels occurring in your environment</td>
+      <td><a href="#AuctioneerLRPAuctionsStarted">auctioneer.AuctioneerLRPAuctionsStarted</a></td>
+   </tr>
+   <tr>
+      <td>Whether or not PCF can place tasks on Diego cells.</td>
+      <td><a href="#AuctioneerTaskAuctionsFailed">auctioneer.AuctioneerTaskAuctionsFailed</a></td>
+   </tr>
+   <tr>
+      <td>Time in ns that the BBS took to run its LRP convergence pass.</td>
+      <td><a href="#ConvergenceLRPDuration">bbs.ConvergenceLRPDuration</a></td>
+   </tr>
+   <tr>
+      <td>How the PCF API is performing.</td>
+      <td><a href="#RequestLatency">bbs.RequestLatency</a></td>
+   </tr>
+   <tr>
+      <td>Whether the <code>cf-apps</code> domain is up-to-date.</td>
+      <td><a href="#Domain.cf-apps">bbs.Domain.cf-apps</a></td>
+   </tr>
+   <tr>
+      <td>How the BBS is performing</td>
+      <td><a href="#LRPsExtra">bbs.LRPsExtra</a><br>
+          <a href="#LRPsMissing">bbs.LRPsMissing</a><br>
+          <a href="#RepBulkSyncDuration">rep.RepBulkSyncDuration</a></td>
+   </tr>
+   <tr>
+      <td>How many app instances are crashed.</td>
+      <td><a href="#CrashedActualLRPs">bbs.CrashedActualLRPs</a></td>
+   </tr>
+   <tr>
+      <td>Rate of change in app instances being started or stopped on the platform.</td>
+      <td><a href="#1hraverageofbbs.LRPsRunning">derived=(1hr average of bbs.LRPsRunning - prior 1hr average of bbs.LRPsRunning)</a></td>
+   </tr>
+   <tr>
+      <td>The available memory on Diego cells.</td>
+      <td><a href="#CapacityRemainingMemory">rep.CapacityRemainingMemory</a></td>
+   <tr>
+      <td>The available disk on Diego cells.</td>
+      <td><a href="#CapacityRemainingDisk">rep.CapacityRemainingDisk</a></td>
+   </tr>
 </table>
 
 ## <a id="auctioneer"></a> Diego Auctioneer
@@ -78,89 +67,92 @@ This topic describes how to use Key Performance Indicators (KPIs) to monitor you
 <a name="AuctioneerLRPAuctionsFailed"></a>
 
 <table>
-    <tr><th colspan="2" style="text-align: center;"><br> auctioneer.AuctioneerLRPAuctionsFailed<br><br></th></tr>
-<tr>
-	<th width="25%">Description</th>
-	<td>The cumulative number of LRP instances that the auctioneer failed to place on Diego cells <br><br>
-
-	<strong>Use</strong>: This metric can indicates that PCF is out of container space or that there is a lack of resources within your environment.
-
-	This error is most common due to capacity issues, for example, if cells do not have 
-	enough resources or if cells are blipping in and out of health.
-	 <br><br>
-	<strong>Origin</strong>: Doppler/Firehose<br>
-	<strong>Type</strong>: Counter, integer<br>
-	<strong>Frequency</strong>: During each auction<br>
-</tr>
-<tr>
-	<th>Recommended measurement</th>
-	<td>Per minute average over a 5 minute window</td>
-</tr>
-<tr>
-	<th>Recommended alert thresholds</th>
-	<td><strong>Yellow warning</strong>: &ge; 0.5<br>
-	<strong>Red critical</strong>: &ge; 1</td>
-</tr>
-<tr>
-	<th>Recommended response</th>
-	<td>
-	Do the following:<br><br>
-	    <ol>
-	    <li>Investigate the health of your Diego cells to determine if they
-	    are the resource type causing the problem.</li> 
-	    <li>Consider scaling additional cells using Ops Manager.</li>
-	    <li>If scaling cells does not solve the problem, retrieve logs
-	    	from the brain VM and bbs node and open a ticket with PCF Support indicating that LRP auctions are failing.</li>
-	    </ol>
-	    </td>
-</tr>
+   <tr><th colspan="2" style="text-align: center;"><br> auctioneer.AuctioneerLRPAuctionsFailed<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td>The cumulative number of LRP instances that the auctioneer failed to place on Diego cells <br><br>
+   
+      <strong>Use</strong>: This metric can indicates that PCF is out of container space or that there is a lack of resources within your environment.
+   
+      This error is most common due to capacity issues, for example, if cells do not have 
+      enough resources or if cells are blipping in and out of health.
+      <br><br>
+      <strong>Origin</strong>: Doppler/Firehose<br>
+      <strong>Type</strong>: Counter, integer<br>
+      <strong>Frequency</strong>: During each auction<br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td>Per minute average over a 5 minute window</td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: &ge; 0.5<br>
+      <strong>Red critical</strong>: &ge; 1</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+      Do the following:<br><br>
+         <ol>
+            <li>Investigate the health of your Diego cells to determine if they
+            are the resource type causing the problem.</li> 
+            <li>Consider scaling additional cells using Ops Manager.</li>
+            <li>If scaling cells does not solve the problem, retrieve logs
+            from the brain VM and BBS node and open a ticket with PCF Support indicating that LRP auctions are failing.</li>
+         </ol>
+      </td>
+   </tr>
 </table>
 
-<a name="auctioneer.AuctioneerFetchStatesDuration"></a>
+<a name="AuctioneerFetchStatesDuration"></a>
 
 <table>
-    <tr><th colspan="2" style="text-align: center;"><br>auctioneer.AuctioneerFetchStatesDuration<br><br></th></tr>
-<tr>
-	<th width="25%">Description</th>
-	<td> Time in nanoseconds that the auctioneer took to fetch state from all the cells when running its auction.<br><br>
-	
-                     <strong>Use</strong>: Indicates how the cells themselves are performing. 
-                     Alerting on this metric helps alert that app stage requests for Diego may be failing.
+   <tr><th colspan="2" style="text-align: center;"><br>auctioneer.AuctioneerFetchStatesDuration<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td> Time in ns that the auctioneer took to fetch state from all the cells when running its auction.<br><br>
 
-	 <br><br>
-	<strong>Origin</strong>: Doppler/Firehose<br>
-	<strong>Type</strong>: Gauge, integer in ns<br>
-	<strong>Frequency</strong>: During event, during each auction<br>
-</tr>
-<tr>
-	<th>Recommended measurement</th>
-	<td> 5 minute maximum divided by 1,000,000,000</td>
-</tr>
-<tr>
-	<th>Recommended alert thresholds</th>
-	<td><strong>Yellow warning</strong>: &ge; 5 s<br>
-	<strong>Red critical</strong>: &ge; 10 s</td>
-</tr>
-<tr>
-	<th>Recommended response</th>
-	<td>
-	Do the following:<br><br>
-	    <ol>
-    <li>Check the health of the cells by reviewing the logs and looking for errors.</li>
-    <li>Review IaaS console metrics.</li>
-    <li>Collect logs from brain VMs and cells and open ticket with PCF support indicating that fetching cell states is taking too long.</li>
-    </ol>
-    </td>
-</tr>
+      <strong>Use</strong>: Indicates how the cells themselves are performing. 
+      Alerting on this metric helps alert that app stage requests for Diego may be failing.
+
+      <br><br>
+      <strong>Origin</strong>: Doppler/Firehose<br>
+      <strong>Type</strong>: Gauge, integer in ns<br>
+      <strong>Frequency</strong>: During event, during each auction<br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td> 5 minute maximum divided by 1,000,000,000</td>
+   </tr>
+   <tr>
+         <th>Recommended alert thresholds</th>
+         <td><strong>Yellow warning</strong>: &ge; 5 s<br>
+         <strong>Red critical</strong>: &ge; 10 s</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td> Do the following:<br><br>
+          <ol>
+             <li>Check the health of the cells by reviewing the logs and looking for errors.</li>
+             <li>Review IaaS console metrics.</li>
+             <li>Collect logs from brain VMs and cells and open ticket with PCF support indicating that fetching cell states is taking too long.</li>
+          </ol>
+       </td>
+   </tr>
 </table>
 
+<a name="AuctioneerLRPAuctionsStarted"></a>
 <table> 
    <tr><th colspan="2" style="text-align: center;"><br>auctioneer.AuctioneerLRPAuctionsStarted<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
                 <td>Cumulative number of LRP instances that the auctioneer successfully placed on Diego cells. Emitted during each auction.
                         <br><br>
-                <strong>Use</strong>: Provides a sense of running system activity levels occuring in your environment. Can also give you a sense of how many AIs have been started over time.   Suggested alert threshold can help indicate a lot of container churn. However, for capacity planning purposes it may be more interesting to observe deltas over a long time window.  
+                <strong>Use</strong>: Provides a sense of running system activity levels occurring in your environment. 
+                Can also give you a sense of how many AIs have been started over time.
+                Suggested alert threshold can help indicate a lot of container churn. 
+                However, for capacity planning purposes it may be more interesting to observe deltas over a long time window. 
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Counter (Integer)<br>
@@ -176,9 +168,9 @@ This topic describes how to use Key Performance Indicators (KPIs) to monitor you
 <strong>Red critical</strong>: Dynamic</td>
 </tr>
 <tr>
-	<th>Recommended response</th>
-	<td>
-	When observing a lot of container churn, do the following:<br><br>
+<th>Recommended response</th>
+<td>
+When observing a lot of container churn, do the following:<br><br>
     <ol>
     <li>Look to eliminate explainable causes of temporary churn, such as a deploy or a lot a current developer activity</li>
     <li>For extended periods of high or low activity, consider scaling up or down CF components as necessary.</li>
@@ -188,6 +180,7 @@ This topic describes how to use Key Performance Indicators (KPIs) to monitor you
 </table>
 
 
+<a name="AuctioneerTaskAuctionsFailed"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>auctioneer.AuctioneerTaskAuctionsFailed<br><br></th></tr>
         <tr>
@@ -217,7 +210,7 @@ Do the following:<br><br>
     <li>Investigate the health of Diego cells.</li>
     <li>consider scaling additional cells using Ops Manager.</li>
     <li>If scaling cells doesn't solve the problem, 
-                        then get logs from the brain VM and bbs node for troubleshooting, 
+                        then get logs from the brain VM and BBS node for troubleshooting, 
                         and open ticket with PCF Support indicating that task auctions are failing.</li>
     </ol>
     </td>
@@ -225,114 +218,128 @@ Do the following:<br><br>
 </table>
 
 
+<a name="ConvergenceLRPDuration"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>bbs.ConvergenceLRPDuration<br><br></th></tr>
-        <tr>
-                <th width="25%">Description</th>
-                <td>Time in nanoseconds that the BBS took to run its LRP convergence pass. Emitted every 30 seconds when LRP convergence runs (emission should be fairly constant on a running Diego-based PCF).
-                        <br><br>
-                <strong>Use</strong>: If the converence run begins taking too long, it is possible that apps or tasks are crashing and not being restarted. This symptom can also be a proxy for indicating loss of connectivity to the BBS database.
-                 <br><br>
-                 <strong>Origin</strong>: Doppler/Firehose<br>
-                 <strong>Type</strong>: Gauge (Integer in ns)<br>
-                 <strong>Frequency</strong>: During Event<br>
-        </tr>
-        <tr>
-                <th>Recommended measurement</th>
-                <td>15 minute maximum of bbs.ConvergenceLRPDuration divided by 1,000,000,000</td>
-        </tr>
-                <tr>
-                <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: &ge; 10 s<br>
-                <strong>Red critical</strong>: &ge; 20 s</td>
-        </tr>
-        <tr>
-                <th>Recommended response</th>
-                <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>Check Diego BBS logs for errors.</li>
-                        <li>Try scaling the BBS VM resources up. For example, add more CPUs/memory depending on its system.cpu/system.memory metrics.</li>
-                        <li>If that does not solve the issue, collect logs from the BBS to provide to Pivotal Support for additional troubleshooting.
-                    </ol>
-                    </td>
-        </tr>
+   <tr><th colspan="2" style="text-align: center;"><br>bbs.ConvergenceLRPDuration<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td>Time in ns that the BBS took to run its LRP convergence pass. 
+          Emitted every 30 seconds when LRP convergence runs (emission should be fairly constant on a running Diego-based PCF).
+          <br><br>
+          <strong>Use</strong>: If the convergence run begins taking too long, 
+          it is possible that apps or tasks are crashing and not being restarted. 
+          This symptom can also be a proxy for indicating loss of connectivity to the BBS database.
+          <br><br>
+          <strong>Origin</strong>: Doppler/Firehose<br>
+          <strong>Type</strong>: Gauge (Integer in ns)<br>
+          <strong>Frequency</strong>: During Event<br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td>15 minute maximum of bbs.ConvergenceLRPDuration divided by 1,000,000,000</td>
+   </tr>
+      <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: &ge; 10 s<br>
+          <strong>Red critical</strong>: &ge; 20 s</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+          Do the following:<br><br>
+          <ol>
+              <li>Check Diego BBS logs for errors.</li>
+              <li>Try vertically scaling the BBS VM resources up. 
+              For example, add more CPUs/memory depending on its system.cpu/system.memory metrics.</li>
+              <li>If that does not solve the issue, collect logs from the BBS to provide to Pivotal Support for additional troubleshooting.
+          </ol>
+          </td>
+   </tr>
 </table>
 
 
+<a name="RequestLatency"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>bbs.RequestLatency<br><br></th></tr>
-        <tr>
-                <th width="25%">Description</th>
-                <td>Time in nanoseconds that the BBS took to handle requests, aggregated across all its API endpoints. Emitted when the BBS API handles requests (emission should be fairly constant on a running Diego-based PCF).
-                        <br><br>
-                <strong>Use</strong>: If this rises, it indicates that the PCF API is slowing. Response to certain "cf" commands will be slow if request latency is high.
-                 <br><br>
-                 <strong>Origin</strong>: Doppler/Firehose<br>
-                 <strong>Type</strong>: Gauge (Integer in ns)<br>
-                 <strong>Frequency</strong>: During Event<br>
-        </tr>
-        <tr>
-                <th>Recommended measurement</th>
-                <td>15 minute maximum of bbs.RequestLatency divided by 1,000,000,000</td>
-        </tr>
-        <tr>
-                <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: &ge; 5 s<br>
-                <strong>Red critical</strong>: &ge; 10 s</td>
-        </tr>
-        <tr>
-                <th>Recommended response</th>
-                <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>Check CPU and Memory statistics in Ops Manager.</li>
-                        <li>Check Diego BBS logs faults/errors that could indicate issues with BBS.</li>
-                        <li>Try scaling the BBS VM resources up. For example, add more CPUs/memory 
-                            depending on its system.cpu/system.memory metrics.</li>
-                        <li>If doesn't solve the issue, then collect a sample of the cell VM logs 
-                            from the BBS VMs for Pivotal Support to further troubleshoot.
-                    </ol>
-                    </td>
-        </tr>
+   <tr><th colspan="2" style="text-align: center;"><br>bbs.RequestLatency<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td>Time in ns that the BBS took to handle requests, aggregated across all its API endpoints. 
+      Emitted when the BBS API handles requests (emission should be fairly constant on a running Diego-based PCF).
+          <br><br>
+          <strong>Use</strong>: If this rises, it indicates that the PCF API is slowing. 
+          Response to certain "cf" commands are slow if request latency is high.
+          <br><br>
+          <strong>Origin</strong>: Doppler/Firehose<br>
+          <strong>Type</strong>: Gauge (Integer in ns)<br>
+          <strong>Frequency</strong>: During Event<br>
+    </tr>
+    <tr>
+      <th>Recommended measurement</th>
+      <td>15 minute maximum of bbs.RequestLatency divided by 1,000,000,000</td>
+    </tr>
+    <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: &ge; 5 s<br>
+          <strong>Red critical</strong>: &ge; 10 s</td>
+    </tr>
+    <tr>
+      <th>Recommended response</th>
+      <td>
+          Do the following:<br><br>
+          <ol>
+              <li>Check CPU and Memory statistics in Ops Manager.</li>
+              <li>Check Diego BBS logs faults/errors that could indicate issues with BBS.</li>
+              <li>Try scaling the BBS VM resources up. For example, add more CPUs/memory 
+                  depending on its system.cpu/system.memory metrics.</li>
+              <li>If doesn't solve the issue, then collect a sample of the cell VM logs 
+                  from the BBS VMs for Pivotal Support to further troubleshoot.
+          </ol>
+          </td>
+    </tr>
 </table>
 
 
+<a name="Domain.cf-apps"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>bbs.Domain.cf-apps<br><br></th></tr>
-        <tr>
-                <th width="25%">Description</th>
-                <td>Whether the 'cf-apps' domain is up-to-date, so that CF apps from CC have been synchronized with DesiredLRPs for Diego to run. 1 means the domain is up-to-date, no data means it is not. Emitted periodically. 
-                        <br><br>
-                <strong>Use</strong>: cf-apps is used to translate cloud controller wishes into Diego implementation. Without freshness, changes will not propagate through the system. If CC and Diego are out of sync the results of "cf apps" will be stale.
-                 <br><br>
-                 <strong>Origin</strong>: Doppler/Firehose<br>
-                 <strong>Type</strong>: <br>
-                 <strong>Frequency</strong>: 30 s<br>
-        </tr>
-        <tr>
-                <th>Recommended measurement</th>
-                <td>Average over last 5 minutes of bbs.Domain.cf_apps</td>
-        </tr>
-        <tr>
-                <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
-                <strong>Red critical</strong>: &lt; 1 </td>
-        </tr>
-        <tr>
-                <th>Recommended response</th>
-                <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>Check the nysnc bulker logs and Diego BBS logs.</li>
-                        <li>If problem continues, collect logs from the Brain and BBS VMs 
-                            and create ticket indicating that cf domain is not being kept fresh.</li>
-                    </ol>
-                    </td>
-        </tr>
+   <tr><th colspan="2" style="text-align: center;"><br>bbs.Domain.cf-apps<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td>Whether the 'cf-apps' domain is up-to-date, so that CF apps from CC have been 
+          synchronized with DesiredLRPs for Diego to run. 1 means the domain is up-to-date, 
+          no data means it is not. Emitted periodically. 
+          <br><br>
+          <strong>Use</strong>: cf-apps is used to translate Cloud Controller desired state into Diego implementation. 
+          Without freshness, changes in cloud controller state is not guaranteed to propagate through the system. 
+          If CC and Diego are out of sync the set of running applications can stray from the set of desired applications.
+          <br><br>
+          <strong>Origin</strong>: Doppler/Firehose<br>
+          <strong>Type</strong>: <br>
+          <strong>Frequency</strong>: 30 s<br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td>Average over last 5 minutes of bbs.Domain.cf_apps</td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
+      <strong>Red critical</strong>: &lt; 1 </td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+          Do the following:<br><br>
+          <ol>
+              <li>Check the nysnc bulker logs and Diego BBS logs.</li>
+              <li>If problem continues, collect logs from the Brain and BBS VMs 
+                  and create ticket indicating that cf domain is not being kept fresh.</li>
+          </ol>
+      </td>
+   </tr>
 </table>
 
 
+<a name="LRPsExtra"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>bbs.LRPsExtra<br><br></th></tr>
         <tr>
@@ -341,11 +348,11 @@ Do the following:<br><br>
                         Emitted every 30 seconds.
                         <br><br>
                 <strong>Use</strong>: Diego has more LRP running than expected. 
-                        When Diego wants to add more apps, the bbs will send a request to the auctioneer 
+                        When Diego wants to add more apps, the BBS sends a request to the auctioneer 
                         to spin up additional Long Running Processes(LRPs). 
                         LRPsExtra is the total number of LRP instances that are no longer 
                         desired but still have a BBS record. 
-                        This could indicate issues with the BBS.  
+                        This could indicate issues with the BBS. 
                         Note that an app delete with many instances can temporarily spike this metric, 
                         however a sustained spike in bbs.LRPsExtra is unusual and should be investigated further. 
                  <br><br>
@@ -375,6 +382,7 @@ Do the following:<br><br>
 </table>
 
 
+<a name="LRPsMissing"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>bbs.LRPsMissing<br><br></th></tr>
         <tr>
@@ -382,10 +390,10 @@ Do the following:<br><br>
                 <td>Total number of LRP instances that are desired but have no record in the BBS. Emitted every 30 seconds.
                         <br><br>
                 <strong>Use</strong>: Diego has less LRP running than expected. 
-                        When Diego wants to add more apps, the bbs will send a request to the auctioneer 
+                        When Diego wants to add more apps, the BBS sends a request to the auctioneer 
                         to spin up additional Long Running Processes(LRPs). 
                         LRPsMissing is the total number of LRP instances that are desired but have no BBS record. 
-                        This could indicate issues with the BBS.  
+                        This could indicate issues with the BBS. 
                         Note that an app push with many instances can temporarily spike this metric, 
                         however a sustained spike in bbs.LRPsMissing is unusual and should be investigated further.
                  <br><br>
@@ -395,7 +403,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>5 minute average of bbs.LRPsMissing	avg</td>
+                <td>5 minute average of bbs.LRPsMissing</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -415,6 +423,7 @@ Do the following:<br><br>
 </table>
 
 
+<a name="bbs.CrashedActualLRPs"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>bbs.CrashedActualLRPs<br><br></th></tr>
         <tr>
@@ -423,7 +432,7 @@ Do the following:<br><br>
                 <br><br>
                 <strong>Use</strong>: Indicates how many instances in the deployment are in a crashed state. 
                 An increase in bbs.CrashedActualLRPs can indicate several problems, from a bad app with many instances associated, 
-                to a platform issue that is resulting in app crashes.   
+                to a platform issue that is resulting in app crashes. 
                 This metric is most helpful to create a baseline in a deployment. 
                 Once a baseline is created, a deployment specific alert can be created to notify of a spike in crashes above trend line. 
                 Alert values should be tuned to the deployment. 
@@ -455,18 +464,19 @@ Do the following:<br><br>
 </table>
 
 
+<a name="1hraverageofbbs.LRPsRunning"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>derived=(1hr average of bbs.LRPsRunning - prior 1hr average of bbs.LRPsRunning)<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Rate of change in app instances being started or stopped on the platform.   
+                <td>Rate of change in app instances being started or stopped on the platform. 
                     Derived from bbs.LRPsRunning, which is emitted periodically 
                     (emission should be fairly constant on a running Diego-based PCF), 
                     and represents the total number of LRP instances that are running on cells.
                     <br><br>
                     <strong>Use</strong>: Delta reflects upward or downward trend for AIs started or stopped. 
                     Helps to provide a picture of the overall growth trend of the environment for capacity planning. 
-                    May wish to alert on delta values out of expected range.
+                    May want to alert on delta values out of expected range.
                     <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Gauge (Float)<br>
@@ -493,90 +503,99 @@ Do the following:<br><br>
 </table>
 
 
-<table>
-     <tr><th colspan="2" style="text-align: center;"><br>derived=(1hr average of bbs.LRPsDesired - prior 1hr average of bbs.LRPsDesired)<br><br></th></tr>
-        <tr>
-                <th width="25%">Description</th>
-                <td>Rate of change in app instances being pushed or deleted on the platform.   
-                    Derived from bbs.LRPsDesired, which is emitted periodically 
-                    (emission should be fairly constant on a running Diego-based PCF), 
-                    and represents the total number of LRP instances desired across all LRPs. 
-                    <br><br>
-                <strong>Use</strong>: Delta reflects upward or downward trend for AIs pushed or deleted. Helps to provide a picture of the overall growth trend of the environment for capacity planning. May wish to alert on delta values out of expected range.
-                 <br><br>
-                 <strong>Origin</strong>: Doppler/Firehose<br>
-                 <strong>Type</strong>: Gauge (Float)<br>
-                 <strong>Frequency</strong>: During Event<br>
-        </tr>
-        <tr>
-                <th>Recommended measurement</th>
-                <td>derived=(1hr average of bbs.LRPsDesired - prior 1hr average of bbs.LRPsDesired)</td>
-        </tr>
-        <tr>
-                <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: Dynamic<br>
-                <strong>Red critical</strong>: Dynamic</td>
-        </tr>
-        <tr>
-                <th>Recommended response</th>
-                <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>Scale up down CF components as necessary.</li>
-                    </ol>
-                    </td>
-        </tr>
-</table>
 
 
+<a name="rep.CapacityRemainingMemory"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>rep.CapacityRemainingMemory<br><br></th></tr>
-        <tr>
-                <th width="25%">Description</th>
-                <td>Remaining amount in MiB of memory available for this cell to allocate to containers. Emitted every 30 seconds.
-                    <br><br>
-                    <strong>Use</strong>: Indicates the available cell memory. 
-                    If low memory, this could prevent application scaling and new deployments.   
-                    It is common to look at this metric as both a minimum value as well as a sum capacity across all cells. 
-                    Minimum value over time of this metric has more informational value than alerting value. 
-                    It can be an interesting heatmap, showing average variance and/or density over time. 
-                    Sum capacity can also be an interesting indicator of the need to potentially scale an environment.   
-                    However, the greater operational value is to understand a deployments average app size, 
-                    and monitor/alert on ensuring that at least some cells have large enough capacity to accept standard app size pushes. 
-                    For example, if pushing a 4gb app, Diego would have trouble placing that app if there is no one cell with sufficent capacity. 
-                    If deployment average was 3.9gb free, yet no one cell contained at least 4gb, the app push would fail. 
-                    As an example, Pivotal Cloud Ops uses a standard of 4gb, and computes and monitors for the number of cells with at least 4gb free. 
-                    When the number of cells with at least 4gb falls below a defined threshold, 
-                    this is a scaling indicator alert to add additional capacity. 
-                    This "Free 4GB Chunk" count threshold should be tuned to the deployment size 
-                    and the standard size of apps being pushed to the platform.
-                 <br><br>
-                 <strong>Origin</strong>: Doppler/Firehose<br>
-                 <strong>Type</strong>: Gauge (Integer in bytes)<br>
-                 <strong>Frequency</strong>: 30 s<br>
-        </tr>
-        <tr>
-                <th>Recommended measurement</th>
-                <td>Total count of cells with a capacity above a deployment defined value  try to give more 
-                    helpful details on how to do this if possible (reference cloudops_tools.diego_4gb_count calculation code)</td>
-        </tr>
-        <tr>
-                <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: Dynamic<br>
-                <strong>Red critical</strong>: Dynamic</td>
-        </tr>
-        <tr>
-                <th>Recommended response</th>
-                <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>Assign more resources to the cells or assign more cells.</li>
+   <tr><th colspan="2" style="text-align: center;"><br>rep.CapacityRemainingMemory<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td>Remaining amount in MiB of memory available for this cell to allocate to containers. Emitted every 30 seconds.
+          <br><br>
+          <strong>Use</strong>: Indicates the available cell memory. 
+          If low memory, this could prevent app scaling and new deployments. 
+          It is common to look at this metric as both a minimum value as well as a sum capacity across all cells. 
+          Minimum value over time of this metric has more informational value than alerting value. 
+          It can be an interesting heatmap, showing average variance and/or density over time. 
+          Sum capacity can also be an interesting indicator of the need to potentially scale an environment. 
+          However, the greater operational value is to understand a deployments average app size, 
+          and monitor/alert on ensuring that at least some cells have large enough capacity to accept standard app size pushes. 
+          For example, if pushing a 4&nbsp;GB app, Diego would have trouble placing that app if there is no one cell with sufficient capacity. 
+          If deployment average was 3.9&nbsp;GB free, yet no one cell contained at least 4&nbsp;GB, the app push would fail. 
+          As an example, Pivotal Cloud Ops uses a standard of 4&nbsp;GB, and computes and monitors 
+          for the number of cells with at least 4&nbsp;GB free. 
+          When the number of cells with at least 4&nbsp;GB falls below a defined threshold, 
+          this is a scaling indicator alert to add additional capacity. 
+          This "Free 4GB Chunk" count threshold should be tuned to the deployment size 
+          and the standard size of apps being pushed to the platform.<br>
+          <br><br>
+          <strong>Origin</strong>: Doppler/Firehose<br>
+          <strong>Type</strong>: Gauge (Integer in bytes)<br>
+          <strong>Frequency</strong>: 30 s<br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td>The minimum amount of memory in a 30 minute window that the cell can allocate to containers.<br>
+          <em>Implementation Tip</em>: Iterate through each Diego cell and grab the rep.CapacityRemainingMemory metric.
+          Divide this metric by 1000 to get the value in GB. 
+          Then compare it to your minimum capacity threshold, and count the number of cells that have enough free space.</td>
+  </tr>
+  <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: Dynamic<br>
+          <strong>Red critical</strong>: Dynamic</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+          Do the following:<br><br>
+          <ol>
+              <li>Assign more resources to the cells or assign more cells.</li>
                         <li>Scale additional Diego Cells using Ops Manager.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
+<a name="rep.CapacityRemainingMemory2"></a>
+<table>
+   <tr><th colspan="2" style="text-align: center;"><br>rep.CapacityRemainingMemory<br>
+       Alternative use.<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td>Remaining amount in MiB of memory available for this cell to allocate to containers. Emitted every 30 seconds.
+          <br><br>
+          <strong>Use</strong>: Can be used to indicate low memory capacity overall in the platform. 
+          Low memory can prevent application scaling and new deployments. 
+          Sum capacity overall is helpful to understanding the need to take action to scale the platform. 
+          Observing how capacity consumption trends over time is useful for on-going capacity planning.
+          <br><br>
+          <strong>Origin</strong>: Doppler/Firehose<br>
+          <strong>Type</strong>: Gauge (Integer in bytes)<br>
+          <strong>Frequency</strong>: 30 s<br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td>Sum of the total available memory capacity across across all cells for the past 5 minutes<br>
+             5 minute sum of rep.CapacityRemainingMemory divided by 0.000001024</td>
+  </tr>
+  <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: &le; 32<br>
+          <strong>Red critical</strong>: &le; 16</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+          Do the following:<br><br>
+          <ol>
+              <li>Assign more resources to the cells or assign more cells</li>
+              <li>Scale additional Diego Cells via Ops Manager</li>
+          </ol>
+                    </td>
+        </tr>
+</table>
+<a name="CapacityRemainingDisk"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br> rep.CapacityRemainingDisk<br><br></th></tr>
         <tr>
@@ -584,7 +603,7 @@ Do the following:<br><br>
                 <td>Remaining amount in MiB of disk available for this cell to allocate to containers. Emitted every 30 seconds.
                     <br><br>
                     <strong>Use</strong>: Indicates the available cell disk. 
-                Low disk capacity could prevent application scaling and new deployments.
+                Low disk capacity could prevent app scaling and new deployments.
                 Similar to rep.CapacityRemainingMemory, it can be meaningful to assess how many chunks of free disk space are above a given threshold. 
                 As Diego staging tasks can fail without at least 4GB free, this recommend red threshold is based on the minimum disk capacity 
                 across the deployment falling below 4GB in the prior 5 minutes.
@@ -595,7 +614,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>5 minute minumum rep.CapacityRemainingDisk divided by 1024 (across all instances)</td>
+                <td>5 minute minimum rep.CapacityRemainingDisk divided by 1024 (across all instances)</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -615,11 +634,12 @@ Do the following:<br><br>
 </table>
 
 
+<a name="RepBulkSyncDuration"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>rep.RepBulkSyncDuration<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Time in nanoseconds that the cell rep took to synchronize the ActualLRPs it has claimed with its actual garden containers. 
+                <td>Time in ns that the cell rep took to synchronize the ActualLRPs it has claimed with its actual garden containers. 
                         <br><br>
                 <strong>Use</strong>: Sync times that are too high may indicate issues with the BBS.
                  <br><br>
@@ -650,17 +670,18 @@ Do the following:<br><br>
 </table>
 
 
+<a name="UnhealthyCell"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>rep.UnhealthyCell<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
                 <td>The cell  periodically checks its health against the garden backend. 
-                    When it fails this healthcheck, it will emit a 1 (unhealthy).
+                    When it fails this healthcheck, it emits a 1 (unhealthy).
                     For Diego cells, 0 signifies healthy, and 1 signifies unhealthy.
                     <br><br>
                     <strong>Use</strong>: Should alert for further investigation if 
-                    multiple unhealthy Diego cells are detected in the given time window.  
-                    If one cell is impacted, it will not participate in autctions, 
+                    multiple unhealthy Diego cells are detected in the given time window. 
+                    If one cell is impacted, it does not participate in auctions, 
                     but customer impact is usually low. If multiple cells are impacted, 
                     this can indicate a larger problem with Diego.
                  <br><br>
@@ -691,11 +712,12 @@ Do the following:<br><br>
 </table>
 
 
+<a name="DesiredLRPSyncDuration"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>nsync_bulker.DesiredLRPSyncDuration<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Time in nanoseconds that the nsync-bulker took to synchronize CF apps and Diego DesiredLRPs. Emitted every 30 seconds.
+                <td>Time in ns that the nsync-bulker took to synchronize CF apps and Diego DesiredLRPs. Emitted every 30 seconds.
                     <br><br>
                     <strong>Use</strong>: Cloud Controller and Diego Brain should be kept synchronized. 
                     This symptom can be a proxy for indicating the BBS database is in an unhealthy state. 
@@ -725,18 +747,19 @@ Do the following:<br><br>
 </table>
 
 
+<a name="RouteEmitterSyncDuration"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>route_emitter.RouteEmitterSyncDuration<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Time in nanoseconds that the active route-emitter took to perform its synchronization pass. 
+                <td>Time in ns that the active route-emitter took to perform its synchronization pass. 
                     Emitted every 30 seconds.
                     <br><br>
                     <strong>Use</strong>: Increases in this metric indicate that the route emitter may be having 
-                    trouble maintaining an accurate routing table to broadcast to the gorouters.  
+                    trouble maintaining an accurate routing table to broadcast to the gorouters. 
                     Alerting values need to be tuned per the deployment, based on historical data adjusted based on observations over time. 
                     The suggested starting point is &ge; 10 for the yellow threshold and &ge; 20 for the critical threshold. 
-                    Pivotal has observed on Pivotal Web Services that above 20 s, the bbs may be failing.
+                    Pivotal has observed on Pivotal Web Services that above 20 s, the BBS may be failing.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Gauge (Float in ns)<br>
@@ -756,22 +779,23 @@ Do the following:<br><br>
                 <td>
                         Do the following:<br><br>
                     <ol>
-                        <li>Investigate Routing table & Diego Brain(s) for errors.</li>
+                        <li>Investigate routing table and Diego brains for errors.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
+<a name="ConsulDownMode"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>route_emitter.ConsulDownMode<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Emits 0 or 1 health status periodically (emission should be fairly constant on a running Diego-based PCF)  
+                <td>Emits 0 or 1 health status periodically (emission should be fairly constant on a running Diego-based PCF) 
                     0 = healthy  1 = route emitter detects consul is down 
                     <br><br>
-                    <strong>Use</strong>: Can indicate consul down during Installation/Upgrade  
-                    Loss of the consul cluster would result in applications becoming unavailable 
+                    <strong>Use</strong>: Can indicate consul down during Installation/Upgrade 
+                    Loss of the consul cluster would result in app becoming unavailable 
                     as their routes were pruned from the routing table
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
@@ -793,97 +817,65 @@ Do the following:<br><br>
                         Do the following:<br><br>
                     <ol>
                         <li>During upgrade, reduce the consul server nodes to 1, and then upgrade.</li>
-                        <li>Outside of installion/update, consider disaster recovery for consul.</li>
+                        <li>Outside of installation/update, consider disaster recovery for consul.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
+## <a id="router"></a> Router Component Metrics from the Gorouter Source
+
+<a name="total_requests"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>stager.StagingRequestsFailed<br><br></th></tr>
-        <tr>
-                <th width="25%">Description</th>
-                <td>Cumulative number of failed staging tasks handled by each stager. Emitted every time a staging task fails.
-                        <br><br>
-                    <strong>Use</strong>: Applications are failing to stage. May indicate a bad app or buildpack
-                 <br><br>
-                 <strong>Origin</strong>: Doppler/Firehose<br>
-                 <strong>Type</strong>: Counter (Integer)<br>
-                 <strong>Frequency</strong>: During Event<br>
-        </tr>
-        <tr>
-                <th>Recommended measurement</th>
-                <td>minimum value over last 5 minutes of stager.StagingRequestsFailed</td>
-        </tr>
-        <tr>
-                <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: &ge; 1<br>
-                <strong>Red critical</strong>: &ge; 3</td>
-        </tr>
-        <tr>
-                <th>Recommended response</th>
-                <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li> Check history to determine if first, recent failure or if on-going issue.</li>
-                        <li>If first failture, continue to monitor for 10 minutes for additional indicators of an on-going problem.</li>
-                        <li>If on-going, identify if bad buildpack in need of repair; repair if necessary.</li>
-                        <li>Then investigate health of Deigo cells.</li>
-                        <li>Consider scaling additional cells using Ops Manager.</li>
-                        <li>If scaling cells doesn't solve the problem, 
-                            then get logs from the Diego brain VM for troubleshooting, 
-                            and open a ticket with PCF Support indicating an on-going issue with apps failing to stage.</li>
-                    </ol>
-                    </td>
-        </tr>
+   <tr><th colspan="2" style="text-align: center;"><br>gorouter.total_requests<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td>Lifetime number of requests completed by component since this instance of the router has started
+          <br><br>
+          <strong>Use</strong>: This metric can provide insight into the overall traffic flow through a PCF foundation. 
+          For performance and capacity management, it is most useful to consider this metric a measure of router throughput, 
+          and convert it as "Requests Per Second", by deriving 'per_second(sum:gorouter.total_requests{*})'. 
+          This allows for observed trends in throughput rate that may indicate a need to scale the gorouter.
+          Alert values on this metric should be tuned to the specifics of the deployment based on historical observed trends. 
+          <br><br>
+          <strong>Origin</strong>: Doppler/Firehose<br>
+          <strong>Type</strong>: Counter (Integer)<br>
+          <strong>Frequency</strong>: 5 s<br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td>average over the last 5 minutes of the per/sec calculation of gorouter.total_requests</td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: Dynamic<br>
+          <strong>Red critical</strong>: Dynamic</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>For the best optimization of the router, this "Requests Per Second" 
+          derived throughput metric should be considered in context of router 
+          latency and router VM CPU utilization.  From performance and load testing 
+          of the gorouter, it has been observed that at approximately 2500 requests 
+          per second, latency can begin to increase. If an operator wants to increase 
+          throughput, while keeping latency low, it is suggested to scale the gorouters, 
+          either horizontally or vertically, while keeping an eye to the suggested 
+          gorouter CPU utilization metric (maximum 60-70% CPU utilization range).</td>
+   </tr>
 </table>
 
 
-<table>
-     <tr><th colspan="2" style="text-align: center;"><br>gorouter.total_requests<br><br></th></tr>
-        <tr>
-                <th width="25%">Description</th>
-                <td>Lifetime number of requests completed by component since this instance of the router has started
-                    <br><br>
-                    <strong>Use</strong>: This metric can provide insight into the overall traffic flow through a PCF foundation. For performance and capacity management, it is most useful to consider this metric a measure of router throughput, and convert it as "Requests Per Second", by deriving 'per_second(sum:gorouter.total_requests{*})'. This allows for observed trends in throughput rate that may indicate a need to scale the gorouter.   Alert values on this metric should be tuned to the specifics of the deployment based on historical observed trends. 
-                 <br><br>
-                 <strong>Origin</strong>: Doppler/Firehose<br>
-                 <strong>Type</strong>: Counter (Integer)<br>
-                 <strong>Frequency</strong>: 5 s<br>
-        </tr>
-        <tr>
-                <th>Recommended measurement</th>
-                <td>average over the last 5 minutes of the per/sec calculation of gorouter.total_requests</td>
-        </tr>
-        <tr>
-                <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: Dynamic<br>
-                <strong>Red critical</strong>: Dynamic</td>
-        </tr>
-        <tr>
-                <th>Recommended response</th>
-                <td>For the best optimization of the router, this "Requests Per Second" 
-                    derived throughput metric should be considered in context of router 
-                    latency and router VM CPU utilization.  From performance and load testing 
-                    of the gorouter, it has been observed that at approximately 2500 requests 
-                    per second, latency can begin to increase. If an opertor wishes to increase 
-                    throughput, while keeping latency low, it is suggested to scale the gorouters, 
-                    either horizontally or vertically, while keeping an eye to the suggested 
-                    gorouter cpu utilization metric (maximum 60-70% cpu utilization range).</td>
-        </tr>
-</table>
-
-
+<a name="latency"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>gorouter.latency<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Time in milliseconds that the Gorouter took to handle requests to its application endpoints. 
+                <td>Time in milliseconds that the Gorouter took to handle requests to its app endpoints. 
                     This is the average round trip response time to an app, which includes router handling. 
-                    Emitted per router request (emission should be fairly constant on a running Diego-based PCF).   
+                    Emitted per router request (emission should be fairly constant on a running Diego-based PCF). 
                     <br><br>
-                    <strong>Use</strong>: Indicactor of how router jobs in PCF may be impacting overall app responsiveness. 
+                    <strong>Use</strong>: Indicator of how router jobs in PCF may be impacting overall app responsiveness. 
                     Latencies above 100ms could indicate problems with the network, misbehaving apps, 
                     or the need to scale the router itself due to on-going traffic congestion. 
                     Though a suggested starting point is 100ms, an alert value on this metric 
@@ -905,31 +897,32 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>Extended periods of high latency can point to several factors. 
-                    The router latency mesaure includes network and application latency impacts as well.<br>
+                    The router latency measure includes network and app latency impacts as well.<br>
                     Do the following:<br><br>
                     <ol>
                         <li>First inspect logs for possible network issues, or indicators of misbehaving apps.</li>
                         <li>If it appears the router may need to scale due to on-going traffic congestion, 
                             it is not recommended to scale on the latency metric alone. 
-                            Instead, look to the CPU utlization of the router VMs.</li>
-                        <li>It is suggested to keep CPU utlization within a maximum 60-70% range.</li>
+                            Instead, look to the CPU utilization of the router VMs.</li>
+                        <li>It is suggested to keep CPU utilization within a maximum 60-70% range.</li>
                         <li>Resolve high utilization by scaling the gorouter.</li>
-                        <li>If an opertor wants to increase throughput, while keeping latency low, 
+                        <li>If an operator wants to increase throughput, while keeping latency low, 
                             it is suggested to scale the gorouters, either horizontally or vertically, 
-                            while keeping an eye to the suggested gorouter cpu utilization metric.</li>
+                            while keeping an eye to the suggested gorouter CPU utilization metric.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
+<a name="ms_since_last_registry_update"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>gorouter.ms_since_last_registry_update<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>	Time in millisecond since the last route register has been been received. Emitted every 30 seconds
+                <td>Time in millisecond since the last route register has been been received. Emitted every 30 seconds
                         <br><br>
-                	<strong>Use</strong>: Can indicate that routes are not being registered to apps correctly. 
+                <strong>Use</strong>: Can indicate that routes are not being registered to apps correctly. 
                         If normal platform usage, consider alerting if it has been at least 30 seconds since the 
                         router last received a message from an app.
                  <br><br>
@@ -962,6 +955,7 @@ Do the following:<br><br>
 </table>
 
 
+<a name="bad_gateways"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>gorouter.bad_gateways<br><br></th></tr>
      <tr>
@@ -969,7 +963,7 @@ Do the following:<br><br>
             <td>Lifetime number of bad gateways (502 response from router itself) 
                     since this instance of the router has started. Emitted every 5 seconds.
                     <br><br>
-                    <strong>Use</strong>: The gorouter will emit a 502 bad gateway error 
+                    <strong>Use</strong>: The gorouter emits a 502 bad gateway error 
                     when it has a route in the routing table and the attempt to make a 
                     connection to the backend finds that backend not there (i.e. doesn't exist). 
                     This indicates potential stale routing tables. 
@@ -1008,6 +1002,7 @@ Do the following:<br><br>
 </table>
 
 
+<a name="responses.5xx"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>gorouter.responses.5xx<br><br></th></tr>
         <tr>
@@ -1017,7 +1012,7 @@ Do the following:<br><br>
                     <br><br>
                     <strong>Use</strong>: The more common cause of a large increase in 5xx responses 
                     is a repeatedly crashing app. Could also be indicative of response issues from 
-                    various applications on the platform. Therefore a unexpectedly high increase 
+                    various apps on the platform. Therefore a unexpectedly high increase 
                     in this metric should be investigated more deeply.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
@@ -1038,7 +1033,7 @@ Do the following:<br><br>
                 <td>
                         Do the following:<br><br>
                     <ol>
-                        <li>Look for Out Of Memory errors or other application level errors.</li>
+                        <li>Look for Out Of Memory errors or other app level errors.</li>
                         <li>As a temporary band-aid, ensure the troublesome app is scaled beyond one instance.</li>
                     </ol>
                     </td>
@@ -1046,6 +1041,7 @@ Do the following:<br><br>
 </table>
 
 
+<a name="total_routes"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>gorouter.total_routes<br><br></th></tr>
         <tr>
@@ -1095,7 +1091,9 @@ Do the following:<br><br>
         </tr>
 </table>
 
+## <a id="doppler-server"></a> Doppler Server Metrics
 
+<a name="listeners.receivedEnvelopes"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>dopplerserver.listeners.receivedEnvelopes<br><br></th></tr>
         <tr>
@@ -1112,7 +1110,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Maximum delta per minute dopplerserver.listeners.receivedEnvelopes over a 5 min window</td>
+                <td>Maximum delta per minute dopplerserver.listeners.receivedEnvelopes over a 5 minute window</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -1132,6 +1130,7 @@ Do the following:<br><br>
         </tr>
 </table>
 
+<a name="deriveddopplerserver.doppler"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>derived=(dopplerserver.doppler.shedenvelopes 
                        + dopplerServer.TruncatingBuffer.totalDroppedMessages)<br><br></th></tr>
@@ -1141,7 +1140,7 @@ Do the following:<br><br>
                     intentionally dropped by Doppler from all of its sinks due to back pressure. 
                     <br><br>
                     <strong>Use</strong>: Indicates that there is too much ingress to the dopplers 
-                    (i.e. too much traffic coming in), and/or that the firehose consumers are not keeping pace; 
+                    (i.e. too much traffic coming in), and/or that the Firehose consumers are not keeping pace; 
                     both result in dropped messages. This serves as an important indicator for consistent logging.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
@@ -1151,7 +1150,7 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended measurement</th>
                 <td>Maximum delta per minute derived=(dopplerserver.doppler.shedenvelopes + dopplerServer.TruncatingBuffer.totalDroppedMessages) 
-                    over a 5 min window</td>
+                    over a 5 minute window</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -1169,282 +1168,224 @@ Do the following:<br><br>
         </tr>
 </table>
 
-<table>
-     <tr><<th colspan="2" style="text-align: center;"><br>derived=(rate of sum of DopplerServer.listeners.receivedEnvelopes / 
-                    rate of sum of MetronAgent.dropsondeMarshaller.sentEnvelopes)<br><br></th></tr>
-     <tr>
-               <th width="25%">Description</th>
-               <td>The count of sent messages from the Metron Agent does not match the count of received messages on the Doppler Server.	
-                 <br><br>
-                 <strong>Use</strong>: Indicates that Loggregator Message reliability from Metron to Doppler is below threshold
-                 <br><br>
-                 <strong>Origin</strong>: Doppler/Firehose<br>
-                 <strong>Type</strong>: Counter (Integer)/Counter(Integer) <br>
-                 <strong>Frequency</strong>: Each emitted every 5s<br></td>
-     </tr>
-     <tr>
-                <th>Recommended measurement</th>
-                <td>Average over last hour of (rate of sum of DopplerServer.listeners.receivedEnvelopes / 
-                    rate of sum of MetronAgent.dropsondeMarshaller.sentEnvelopes)</td>
-     </tr>
-	N/A	<0.9	Possible Reason(s) - Doppler has run out of file descriptors.   Run command 'lsof -c doppler' (will give all open file descriptors for doppler). If they are very high (over 20k), restart doplers and scale dopplers 	Doppler Server	Doppler Server
-        </tr>
-        <tr>
-                <th>Recommended measurement</th>
-                <td>maximum over last 5 minutes of gorouter.ms_since_last_registry_update</td>
-        </tr>
-        <tr>
-                <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
-                <strong>Red critical</strong>: &lt; 0.9</td>
-        </tr>
-        <tr>
-                <th>Recommended response</th>
-                <td>
-                   Possible Reason(s) – Doppler has run out of file descriptors.
-                  Do the following:<br><br>
-                  <ol>
-                   <li>Run command 'lsof -c doppler' (will give all open file descriptors for doppler).</li> 
-                   <li>If they are very high (over 20k), restart doplers and scale dopplers</li>
-                  </ol>
-        </tr>
-</table>
+## <a id="bosh"></a> System (BOSH) Metrics
 
-
-
+<a name="healthy"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>system.healthy<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>	`1` means the system is healthy, and `0` means the system is not healthy	
+                <td>`1` means the system is healthy, and `0` means the system is not healthy
                 <br><br>
-                <strong>Use</strong>: The most important Bosh Metric to monitor, it indicates whether a given VM emitting this metric is healthy, and points towards the overall health status of your system.
-                        <br><br>
-                
+                <strong>Use</strong>: The most important Bosh Metric to monitor, it indicates whether a 
+                given VM emitting this metric is healthy, and points towards the overall health status of your system.
                  <br><br>
                  <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                  <strong>Type</strong>: Gauge (Float, 0-1)<br>
                  <strong>Frequency</strong>: 60 s<br>
-	Average over last 5 minutes of system.healthy	avg	5 minute	N/A	<1	Investigate CF logs for the unhealthy component(s). Multiple unhealthly vm signals can point to problems with the underlying IAAS layer.	System (BOSH)	System (BOSH)
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>maximum over last 5 minutes of gorouter.ms_since_last_registry_update</td>
+                <td>Average over last 5 minutes of system.healthy</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
                 <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
-                <strong>Red critical</strong>: </td>
+                <strong>Red critical</strong>: &lt; 1</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
                         Do the following:<br><br>
                     <ol>
-                        <li>step</li>
-                        <li>step</li>
+                        <li>Investigate CF logs for the unhealthy component(s). 
+                        Multiple unhealthy VM signals can point to problems with the underlying IAAS layer.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
+<a name="mem.percent"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>system.mem.percent<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>	System Memory % - Percentage of memory used on the VM  
+                <td>System Memory % - Percentage of memory used on the VM 
                         <br><br>
-                	<strong>Use</strong>: Indicates there is a continued period of low free RAM	                 <br><br>
+                <strong>Use</strong>: Indicates there is a continued period of low free RAM                 <br><br>
                  <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                  <strong>Type</strong>: Gauge (%)<br>
                  <strong>Frequency</strong>: 60 s<br>
-	Average over last 10 minutes of system.mem.percent	avg	10 minute	=>80	=>90	It can depend on the job the metric is associated with. If appropriate scale affected jobs out and monitor for improvement.	System (BOSH)	System (BOSH)
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>maximum over last 5 minutes of gorouter.ms_since_last_registry_update</td>
+                <td>Average over last 10 minutes of system.mem.percent</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
-                <strong>Red critical</strong>: </td>
+                <td><strong>Yellow warning</strong>: &ge; 80 <br>
+                <strong>Red critical</strong>:&ge; 90</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
                         Do the following:<br><br>
                     <ol>
-                        <li>step</li>
-                        <li>step</li>
+                        <li>It can depend on the job the metric is associated with.</li>
+                        <li>If appropriate scale affected jobs out and monitor for improvement.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
+<a name="disk.system.percent"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>system.disk.system.percent<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>	System Disk % - Percentage of system disk used on the VM
+                <td>System Disk % - Percentage of system disk used on the VM
                         <br><br>
-                	<strong>Use</strong>: Indicates that system disk is almost full                 <br><br>
+                <strong>Use</strong>: Indicates that system disk is almost full                 <br><br>
                  <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                  <strong>Type</strong>: Gauge (%)<br>
                  <strong>Frequency</strong>: 60 s<br>
-	Average over last 30 minutes of system.disk.system.percent	avg	30 minute	=>80	=>90	Investigate what is filling the Jobs sytem partition. This partition should typically not fill as BOSH deploys jobs to use ephemral and persistent disks	System (BOSH)	System (BOSH)
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>maximum over last 5 minutes of gorouter.ms_since_last_registry_update</td>
+                <td>Average over last 30 minutes of system.disk.system.percent</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
-                <strong>Red critical</strong>: </td>
+                <td><strong>Yellow warning</strong>: &ge; 80</br>
+                <strong>Red critical</strong>: &ge; 90</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
                         Do the following:<br><br>
                     <ol>
-                        <li>step</li>
-                        <li>step</li>
+                        <li>Investigate what is filling the Jobs system partition. 
+                        This partition should typically not fill as BOSH deploys jobs to use ephemeral and persistent disks.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
+<a name="disk.epheremal.percent"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>system.disk.epheremal.percent<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>	Ephemeral Disk % - Percentage of ephemeral disk used on the VM
-                        <br><br>
-                	<strong>Use</strong>: Alert for further investigation if ephemeral disk consumption is too high for a given job for an extended period.                 <br><br>
-                 <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
-                 <strong>Type</strong>: Gauge (%)<br>
-                 <strong>Frequency</strong>: 60 s<br>
-	Average over last 30 minutes of system.disk.ephermal.percent	avg	30 minute	=>80	=>90	Issue ```bosh vms --details``` to view jobs on affected deployments. Determine cause of the data consumption, and if appropriate either increase disk space or scale affected jobs out.	System (BOSH)	System (BOSH)
+                <td>Ephemeral Disk % - Percentage of ephemeral disk used on the VM
+                <br><br>
+               <strong>Use</strong>: Alert for further investigation if ephemeral 
+                disk consumption is too high for a given job for an extended period.
+                <br><br>
+                <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
+                <strong>Type</strong>: Gauge (%)<br>
+                <strong>Frequency</strong>: 60 s<br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>maximum over last 5 minutes of gorouter.ms_since_last_registry_update</td>
+                <td>Average over last 30 minutes of system.disk.ephermal.percent</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
-                <strong>Red critical</strong>: </td>
+                <td><strong>Yellow warning</strong>: &ge; 80</br>
+                <strong>Red critical</strong>: &ge; 90</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
                         Do the following:<br><br>
                     <ol>
-                        <li>step</li>
-                        <li>step</li>
+                        <li>Issue ```bosh vms --details``` to view jobs on affected deployments.</li>
+                        <li>Determine cause of the data consumption, and, if appropriate, 
+                            either increase disk space or scale affected jobs out.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
+<a name="disk.persistent.percent"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>system.disk.persistent.percent<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>	Persistent Disk % - Percentage of persistent disk used on the VM
+                <td>Persistent Disk % - Percentage of persistent disk used on the VM
                         <br><br>
-                	<strong>Use</strong>: Alert for further investigation if persistent disk consumption is too high for a given job for an extended period.
+                <strong>Use</strong>: Alert for further investigation if persistent disk consumption is too high 
+                for a given job for an extended period.
                         <br><br>
                                  <br><br>
                  <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                  <strong>Type</strong>: Gauge (%)<br>
                  <strong>Frequency</strong>: 60 s<br>
-	Average over last 30 minutes of system.disk.persistent.percent	avg	30 minute	=>80	=>90	Issue ```bosh vms --details``` to view jobs on affected deployments. Determine cause of the data consumption, and if appropriate either increase disk space or scale affected jobs out.	System (BOSH)	System (BOSH)
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>maximum over last 5 minutes of gorouter.ms_since_last_registry_update</td>
+                <td>Average over last 30 minutes of system.disk.persistent.percent</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
-                <strong>Red critical</strong>: </td>
+                <td><strong>Yellow warning</strong>: &ge; 80<br>
+                <strong>Red critical</strong>: &ge; 90</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
                         Do the following:<br><br>
                     <ol>
-                        <li>step</li>
-                        <li>step</li>
+                        <li>Issue ```bosh vms --details``` to view jobs on affected deployments.</li>
+                        <li>Determine cause of the data consumption, and, if appropriate, 
+                            either increase disk space or scale affected jobs out.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
-        </tr>
-        <tr>
-                <th>Recommended measurement</th>
-                <td>maximum over last 5 minutes of gorouter.ms_since_last_registry_update</td>
-        </tr>
-        <tr>
-                <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
-                <strong>Red critical</strong>: </td>
-        </tr>
-        <tr>
-                <th>Recommended response</th>
-                <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>step</li>
-                        <li>step</li>
-                    </ol>
-                    </td>
-        </tr>
+<a name="cpu.user"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>system.cpu.user<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>	CPU Utilization (%) - Amount of CPU spent in user processes	
+                <td>CPU Utilization (%) - Amount of CPU spent in user processes
                 <br><br>
-                <strong>Use</strong>: Alert for further investigation if CPU Utilization is too high for a given job  For monitoring of router performance, CPU utilization of the Router VM is recommended as a key capacity scaling indicator
-                        <br><br>
-                                 <br><br>
-                 <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
-                 <strong>Type</strong>: Gauge (%)<br>
-                 <strong>Frequency</strong>: 60 s<br>
-	Average over last 5 minutes of system.cpu.user	avg	5 minute	=>85	=>95	High CPU Utilization - Investigate cause of spike and possibly scale affected job if cause is normal workload increase	System (BOSH)	System (BOSH)
+                <strong>Use</strong>: Alert for further investigation if CPU Utilization is 
+                too high for a given job.
+                For monitoring of router performance, CPU utilization of the Router VM is 
+                recommended as a key capacity scaling indicator.
+                <br><br>
+                <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
+                <strong>Type</strong>: Gauge (%)<br>
+                <strong>Frequency</strong>: 60 s<br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>maximum over last 5 minutes of gorouter.ms_since_last_registry_update</td>
+                <td>Average over last 5 minutes of system.cpu.user</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: <em>N/A</em> <br>
-                <strong>Red critical</strong>: </td>
+                <td><strong>Yellow warning</strong>: &ge; 85<br>
+                <strong>Red critical</strong>: &ge; 95</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
+                  High CPU Utilization Do the following:<br><br>
                     <ol>
-                        <li>step</li>
-                        <li>step</li>
+                        <li>Investigate cause of spike.</li>
+                        <li>Possibly scale affected job if cause is normal workload increase.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
-## <a id="router"></a> Router
 
-## <a id="doppler-server"></a> Doppler Server
 
-## <a id="bosh"></a> System (BOSH)
