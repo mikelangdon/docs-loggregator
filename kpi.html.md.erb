@@ -3,66 +3,60 @@ title: Key Performance Indicators
 owner: PCF Metrics Platform Monitoring
 ---
 
-This topic describes how to use Key Performance Indicators (KPIs) to monitor your Pivotal Cloud Foundry (PCF) deployment and ensure it is in a good operational state. 
+This topic describes how to use Key Performance Indicators (KPIs) to monitor your Pivotal Cloud Foundry (PCF) 
+deployment and ensure it is in a good operational state. 
 
 ## <a id="overview"></a> Overview
 
 <table>
    <tr>
-      <th>If you want to know...</th>
-      <th>Then see...</th>
+      <th width="35%">For metrics related to the component&hellip;</th>
+      <th>and the source&hellip;</th>
+      <th>see&hellip;</th>
    <tr>
-      <td>Whether or not PCF can place apps on Diego cells.</td>
-      <td><a href="#AuctioneerLRPAuctionsFailed">auctioneer.AuctioneerLRPAuctionsFailed</a></td>
    </tr>
-   <tr>
-      <td>How Diego cells are performing.</td>
-      <td><a href="#AuctioneerFetchStatesDuration">auctioneer.AuctioneerFetchStatesDuration</a></td>
+       <td>Diego</td>
+       <td>Auctioneer</td>
+       <td><a href="#auctioneer">Link</a></td>
    </tr>
-   <tr>
-      <td>The running system activity levels occurring in your environment</td>
-      <td><a href="#AuctioneerLRPAuctionsStarted">auctioneer.AuctioneerLRPAuctionsStarted</a></td>
    </tr>
-   <tr>
-      <td>Whether or not PCF can place tasks on Diego cells.</td>
-      <td><a href="#AuctioneerTaskAuctionsFailed">auctioneer.AuctioneerTaskAuctionsFailed</a></td>
+       <td>Diego</td>
+       <td>BBS</td>
+       <td><a href="#bbs">Link</a></td>
    </tr>
-   <tr>
-      <td>Time in ns that the BBS took to run its LRP convergence pass.</td>
-      <td><a href="#ConvergenceLRPDuration">bbs.ConvergenceLRPDuration</a></td>
    </tr>
-   <tr>
-      <td>How the PCF API is performing.</td>
-      <td><a href="#RequestLatency">bbs.RequestLatency</a></td>
+       <td>Diego</td>
+       <td>Cell</td>
+       <td><a href="#cell">Link</a></td>
    </tr>
-   <tr>
-      <td>Whether the <code>cf-apps</code> domain is up-to-date.</td>
-      <td><a href="#Domain.cf-apps">bbs.Domain.cf-apps</a></td>
    </tr>
-   <tr>
-      <td>How the BBS is performing</td>
-      <td><a href="#LRPsExtra">bbs.LRPsExtra</a><br>
-          <a href="#LRPsMissing">bbs.LRPsMissing</a><br>
-          <a href="#RepBulkSyncDuration">rep.RepBulkSyncDuration</a></td>
+       <td>Diego</td>
+       <td>nsync\_bulker</td>
+       <td><a href="#nsync_bulker">Link</a></td>
    </tr>
-   <tr>
-      <td>How many app instances are crashed.</td>
-      <td><a href="#CrashedActualLRPs">bbs.CrashedActualLRPs</a></td>
    </tr>
-   <tr>
-      <td>Rate of change in app instances being started or stopped on the platform.</td>
-      <td><a href="#1hraverageofbbs.LRPsRunning">derived=(1hr average of bbs.LRPsRunning - prior 1hr average of bbs.LRPsRunning)</a></td>
+       <td>Diego</td>
+       <td>Router Emitter</td>
+       <td><a href="#route_emitter">Link</a></td>
    </tr>
-   <tr>
-      <td>The available memory on Diego cells.</td>
-      <td><a href="#CapacityRemainingMemory">rep.CapacityRemainingMemory</a></td>
-   <tr>
-      <td>The available disk on Diego cells.</td>
-      <td><a href="#CapacityRemainingDisk">rep.CapacityRemainingDisk</a></td>
+   </tr>
+       <td>Router</td>
+       <td>Gorouter</td>
+       <td><a href="#gorouter">Link</a></td>
+   </tr>
+   </tr>
+       <td>Doppler Server</td>
+       <td><em>N/A</em></td>
+       <td><a href="#doppler-server">Link</a></td>
+   </tr>
+   </tr>
+       <td>System (BOSH)</td>
+       <td><em>N/A</em></td>
+       <td><a href="#bosh">Link</a></td>
    </tr>
 </table>
 
-## <a id="auctioneer"></a> Diego Auctioneer
+## <a id="auctioneer"></a> Diego Auctioneer Metrics
  
 <a name="AuctioneerLRPAuctionsFailed"></a>
 
@@ -217,6 +211,7 @@ Do the following:<br><br>
 </tr>
 </table>
 
+## <a id="bbs"></a> Diego BBS Metrics
 
 <a name="ConvergenceLRPDuration"></a>
 <table>
@@ -318,7 +313,7 @@ Do the following:<br><br>
    </tr>
    <tr>
       <th>Recommended measurement</th>
-      <td>Average over last 5 minutes of bbs.Domain.cf_apps</td>
+      <td>Average over last 5 minutes of bbs.Domain.cf\_apps</td>
    </tr>
    <tr>
       <th>Recommended alert thresholds</th>
@@ -504,6 +499,7 @@ Do the following:<br><br>
 
 
 
+## <a id="cell"></a> Diego Cell Metrics
 
 <a name="rep.CapacityRemainingMemory"></a>
 <table>
@@ -712,9 +708,11 @@ Do the following:<br><br>
 </table>
 
 
+## <a id="nsync_bulker"></a> Diego nsync_bulker Metrics
+
 <a name="DesiredLRPSyncDuration"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>nsync_bulker.DesiredLRPSyncDuration<br><br></th></tr>
+     <tr><th colspan="2" style="text-align: center;"><br>nsync\_bulker.DesiredLRPSyncDuration<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
                 <td>Time in ns that the nsync-bulker took to synchronize CF apps and Diego DesiredLRPs. Emitted every 30 seconds.
@@ -728,7 +726,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>15 minute maximum of nsync_bulker.DesiredLRPSyncDuration divided by 1,000,000,000</td>
+                <td>15 minute maximum of nsync\_bulker.DesiredLRPSyncDuration divided by 1,000,000,000</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -746,10 +744,11 @@ Do the following:<br><br>
         </tr>
 </table>
 
+##<a id="route_emitter"></a>Diego Router Emitter Metrics
 
 <a name="RouteEmitterSyncDuration"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>route_emitter.RouteEmitterSyncDuration<br><br></th></tr>
+     <tr><th colspan="2" style="text-align: center;"><br>route\_emitter.RouteEmitterSyncDuration<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
                 <td>Time in ns that the active route-emitter took to perform its synchronization pass. 
@@ -767,7 +766,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>15 minute maximum of route_emitter.RouteEmitterSyncDuration divided by 1,000,000,000</td>
+                <td>15 minute maximum of route\_emitter.RouteEmitterSyncDuration divided by 1,000,000,000</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -788,7 +787,7 @@ Do the following:<br><br>
 
 <a name="ConsulDownMode"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>route_emitter.ConsulDownMode<br><br></th></tr>
+     <tr><th colspan="2" style="text-align: center;"><br>route\_emitter.ConsulDownMode<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
                 <td>Emits 0 or 1 health status periodically (emission should be fairly constant on a running Diego-based PCF) 
@@ -804,7 +803,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Average over last 5 minutes of route_emitter.ConsulDownMode</td>
+                <td>Average over last 5 minutes of route\_emitter.ConsulDownMode</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -824,18 +823,18 @@ Do the following:<br><br>
 </table>
 
 
-## <a id="router"></a> Router Component Metrics from the Gorouter Source
+## <a id="gorouter"></a> Router Gorouter Metrics
 
 <a name="total_requests"></a>
 <table>
-   <tr><th colspan="2" style="text-align: center;"><br>gorouter.total_requests<br><br></th></tr>
+   <tr><th colspan="2" style="text-align: center;"><br>gorouter.total\_requests<br><br></th></tr>
    <tr>
       <th width="25%">Description</th>
       <td>Lifetime number of requests completed by component since this instance of the router has started
           <br><br>
           <strong>Use</strong>: This metric can provide insight into the overall traffic flow through a PCF foundation. 
           For performance and capacity management, it is most useful to consider this metric a measure of router throughput, 
-          and convert it as "Requests Per Second", by deriving 'per_second(sum:gorouter.total_requests{*})'. 
+          and convert it as "Requests Per Second", by deriving 'per\_second(sum:gorouter.total\_requests{*})'. 
           This allows for observed trends in throughput rate that may indicate a need to scale the gorouter.
           Alert values on this metric should be tuned to the specifics of the deployment based on historical observed trends. 
           <br><br>
@@ -845,7 +844,7 @@ Do the following:<br><br>
    </tr>
    <tr>
       <th>Recommended measurement</th>
-      <td>average over the last 5 minutes of the per/sec calculation of gorouter.total_requests</td>
+      <td>average over the last 5 minutes of the per/sec calculation of gorouter.total\_requests</td>
    </tr>
    <tr>
       <th>Recommended alert thresholds</th>
@@ -917,7 +916,7 @@ Do the following:<br><br>
 
 <a name="ms_since_last_registry_update"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>gorouter.ms_since_last_registry_update<br><br></th></tr>
+     <tr><th colspan="2" style="text-align: center;"><br>gorouter.ms\_since\_last\_registry\_update<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
                 <td>Time in millisecond since the last route register has been been received. Emitted every 30 seconds
@@ -1095,7 +1094,7 @@ Do the following:<br><br>
 
 <a name="listeners.receivedEnvelopes"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>dopplerserver.listeners.receivedEnvelopes<br><br></th></tr>
+     <tr><th colspan="2" style="text-align: center;"><br>DopplerServer.listeners.receivedEnvelopes<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
                 <td># messages received by doppler. Total number of messages received across 
@@ -1132,8 +1131,8 @@ Do the following:<br><br>
 
 <a name="deriveddopplerserver.doppler"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>derived=(dopplerserver.doppler.shedenvelopes 
-                       + dopplerServer.TruncatingBuffer.totalDroppedMessages)<br><br></th></tr>
+     <tr><th colspan="2" style="text-align: center;"><br>derived=(DopplerServer.doppler.shedEnvelopes 
+                       + DopplerServer.TruncatingBuffer.totalDroppedMessages)<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
                 <td># messages dropped per sink. Lifetime (since VM start) total number of messages 
