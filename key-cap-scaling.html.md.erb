@@ -1,0 +1,379 @@
+---
+title: Key Capacity Scaling Indicators
+owner: PCF Metrics Platform Monitoring
+---
+
+This topic describes how to use Key Capacity Scaling Indicators that you should monitor to ...
+
+## <a id="overview"></a> Overview
+
+<table>
+   <tr>
+      <th width="35%">For metrics related to the component&hellip;</th>
+      <th>and the source&hellip;</th>
+      <th>see&hellip;</th>
+   <tr>
+   </tr>
+       <td>Doppler Server</td>
+       <td><em>N/A</em></td>
+       <td><a href="#doppler-server">Link.</a></td>
+   </tr>
+   </tr>
+       <td>System (BOSH)</td>
+       <td><em>N/A</em></td>
+       <td><a href="#bosh">Link.</a></td>
+   </tr>
+   </tr>
+       <td>Diego</td>
+       <td>Cell</td>
+       <td><a href="#cell">Link.</a></td>
+   </tr>
+</table>
+
+## <a id="doppler-server"></a> Doppler Server Capacity Scaling Indicator
+ 
+
+<table>
+   <tr><th width="25"><br>Impacted Component</th>
+       <td>Firehose Performance Doppler</td></tr>
+   <tr>
+      <th>Derived Metric</th>
+      <td>((DopplerServer.TruncatingBuffer.totalDroppedMessages +
+        DopplerServer.doppler.shedEnvelopes) / DopplerServer.listeners.receivedEnvelopes)<br><br></td>
+   </tr>
+   <tr>
+      <th>Description</th>
+      <td>Base metric is lifetime (since vm start) total number of messages intentionally dropped by 
+          Doppler from all of its sinks due to back pressure. Emitted every 5 seconds. 
+          Derive it to track the number dropped per second.<br>
+
+          Recommended scaling indicator is to look at the total dropped as a % of the total throughput. 
+          Then scale if the value grows greater than 0.1.
+          <br><br>
+          
+    
+      <strong>Use</strong>: Excessive dropped messages can indicate not enough Firehose 
+              subscriber message ingestion (i.e. singnifies dopplers are not processing 
+              messages fast enough), resulting in lost messages. 
+              Consider scaling up Doppler/Loggregator instances. 
+   
+      <br><br>
+      <strong>Origin</strong>: Doppler/Firehose<br>
+      <strong>Type</strong>: Gauge (float)<br>
+      <strong>Frequency</strong>: Emitted every 5 s<br>
+      <strong>Applies to</strong>: cf:doppler<br>
+
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: &ge; 0.05<br>
+      <strong>Red critical</strong>: &ge; 0.1</td>
+   </tr>
+   <tr>
+      <th>Guidance for scaling</th>
+      <td>Excessive dropped messages can indicate not enough Firehose subscriber message ingestion 
+          (i.e. singnifies dopplers are not processing messages fast enough), resulting in lost messages.<br>
+          Consider scaling up Doppler/Loggregator instances. 
+      </td>
+   </tr>
+</table>
+
+<a name="deriveddopplerservertrunc"></a>
+
+<table>
+   <tr><th colspan="2" style="text-align: center;"><br> derived=((DopplerServer.TruncatingBuffer.totalDroppedMessages +
+        DopplerServer.doppler.shedEnvelopes) / DopplerServer.listeners.receivedEnvelopes)<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td>Base metric is lifetime (since vm start) total number of messages intentionally dropped by 
+          Doppler from all of its sinks due to back pressure. Emitted every 5 seconds. 
+          Derive it to track the number dropped per second.<br>
+
+          Recommended scaling indicator is to look at the total dropped as a % of the total throughput. 
+          Then scale if the value grows greater than 0.1.
+          <br><br>
+          
+    
+      <strong>Use</strong>: Excessive dropped messages can indicate not enough Firehose 
+              subscriber message ingestion (i.e. singnifies dopplers are not processing 
+              messages fast enough), resulting in lost messages. 
+              Consider scaling up Doppler/Loggregator instances. 
+   
+      <br><br>
+      <strong>Origin</strong>: <br>
+      <strong>Type</strong>: Gauge (float)<br>
+      <strong>Frequency</strong>: <br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td> Changeme </td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: changeme<br>
+      <strong>Red critical</strong>: changeme</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+      Do the following:<br><br>
+         <ol>
+            <li>Thing.</li> 
+            <li>Thing.</li> 
+         </ol>
+      </td>
+   </tr>
+</table>
+
+##<a id="bosh"></a>System (BOSH) Capacity Scaling Indicators
+
+<a name="system.cpu.user"></a>
+
+<table>
+   <tr><th colspan="2" style="text-align: center;"><br>system.cpu.user of gorouter vm(s)<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td>CPU utilization of the Router VM<br>
+          From performance and load testing of the gorouter, it has been observed that approximately 
+          60% CPU utilization is an inflection point for decreasing performance. 
+          When CPU utilization of the router vm(s) increases more than 60%, 
+          there has been an observed increase in latency and a leveling off of potential throughput (requests per sec). <br><br>
+
+      <br><br>
+      <strong>Use</strong>: It is suggested to keep CPU utlization within a maximum 60-70% range. 
+              Resolve high utilization by scaling the gorouter. 
+
+              If an opertor wants to increase throughput, while keeping latency low, 
+              it is suggested to scale the gorouters, either horizontally or vertically, 
+              while keeping an eye to the suggested gorouter cpu utilization metric.
+
+      <br><br>
+      <strong>Origin</strong>: <br>
+      <strong>Type</strong>: Gauge (float)<br>
+      <strong>Frequency</strong>: <br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td> Changeme </td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: changeme<br>
+      <strong>Red critical</strong>: changeme</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+      Do the following:<br><br>
+         <ol>
+            <li>Thing.</li> 
+            <li>Thing.</li> 
+         </ol>
+      </td>
+   </tr>
+</table>
+
+
+<a name="derivedsystemload"></a>
+
+<table>
+   <tr><th colspan="2" style="text-align: center;"><br>derived=(system.load.1m/[vCPU count of Cells])<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td> Amount of load the system is under, averaged over one minute.<br><br>
+          The vCPU count of cells is defined in Ops Manager and can be pulled via the Ops Manager API.
+
+      <strong>Use</strong>: CPU Loads trending lower than or higher than 1 for extended 
+              periods of time indicate too much or too few CPU resource respectively.
+      
+
+      <br><br>
+   
+      <strong>Use</strong>: 
+   
+      <br><br>
+      <strong>Origin</strong>: <br>
+      <strong>Type</strong>: Gauge (float)<br>
+      <strong>Frequency</strong>: <br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td> Changeme </td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: changeme<br>
+      <strong>Red critical</strong>: changeme</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+      Do the following:<br><br>
+         <ol>
+            <li>Thing.</li> 
+            <li>Thing.</li> 
+         </ol>
+      </td>
+   </tr>
+</table>
+
+<a name="systemdiskpersist"></a>
+
+<table>
+   <tr><th colspan="2" style="text-align: center;"><br>system.disk.persistent.percent of NFS server vm(s)<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td><em>If applicable</em> Percentage of persistent disk used on the VM for the NFS Server job.<br><br>
+
+      <br><br>
+      <strong>Use</strong>: When not leveraging an external S3 repository for external storage 
+              with no capacity constraints, the object store for Cloud Foundry must be monitored 
+              to push new applications and buildpacks. When leveraging an internal NFS/WebDAV backed blobstore, 
+              consider scaling the persistent disk when 75% capacity is reached.
+
+      <br><br>
+      <strong>Origin</strong>: <br>
+      <strong>Type</strong>: Gauge (%)<br>
+      <strong>Frequency</strong>: <br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td> Changeme </td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: changeme<br>
+      <strong>Red critical</strong>: changeme</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+      Do the following:<br><br>
+         <ol>
+            <li>Thing.</li> 
+            <li>Thing.</li> 
+         </ol>
+      </td>
+   </tr>
+</table>
+
+##<a id="cell"></a>Diego Cell Capacity Scaling Indicators
+
+<a name="derivedrepcap"></a>
+
+<table>
+   <tr><th colspan="2" style="text-align: center;"><br>derived=(rep.CapacityRemainingContainers / rep.CapacityTotalContainers)<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td> Total number of containers this cell can host assuming adequate resources. Emitted every 30 seconds.<br><br>
+
+      <br><br>
+      <strong>Use</strong>: Best Practice deployment of Cloud Foundry recommends 3 Availability zones.  
+              For these types of deployments it is suggested to have enough capacity to suffer failure of a complete availability Zone.
+
+      <br><br>
+   
+      <strong>Origin</strong>: <br>
+      <strong>Type</strong>: Gauge (%)<br>
+      <strong>Frequency</strong>: <br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td> Changeme </td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: changeme<br>
+      <strong>Red critical</strong>: changeme</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+      Do the following:<br><br>
+         <ol>
+            <li>Thing.</li> 
+            <li>Thing.</li> 
+         </ol>
+      </td>
+   </tr>
+</table>
+
+<a name="drivedrepcaprem">
+<table>
+   <tr><th colspan="2" style="text-align: center;"><br>derived=(rep.CapacityRemainingDisk/rep.CapacityTotalDisk)<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td> Total amount in MiB of disk available for this cell to allocate to containers. Emitted every 30 seconds.<br><br>
+
+      <br><br>
+      <strong>Use</strong>: Best Practice deployment of Cloud Foundry recommends 3 Availability zones.
+              For these types of deployments it is suggested to have enough capacity to suffer failure of a complete availability Zone.
+
+      <br><br>
+   
+      <strong>Use</strong>: 
+   
+      <br><br>
+      <strong>Origin</strong>: <br>
+      <strong>Type</strong>: Gauge (%)<br>
+      <strong>Frequency</strong>: <br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td> Changeme </td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: changeme<br>
+      <strong>Red critical</strong>: changeme</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+      Do the following:<br><br>
+         <ol>
+            <li>Thing.</li> 
+            <li>Thing.</li> 
+         </ol>
+      </td>
+   </tr>
+</table>
+
+<a name="derivedremmem"></a>
+
+<table>
+   <tr><th colspan="2" style="text-align: center;"><br>derived=(rep.CapacityRemainingMemory/rep.CapacityTotalMemory)<br><br></th></tr>
+   <tr>
+      <th width="25%">Description</th>
+      <td> Total amount in MiB of memory available for this cell to allocate to containers. Emitted every 30 seconds.</br><br>
+
+      <br><br>
+   
+      <strong>Use</strong>: Best Practice deployment of Cloud Foundry recommends 3 Availability zones.  
+              For these types of deployments it is suggested to have enough capacity to suffer failure of a complete availability Zone.
+   
+      <br><br>
+      <strong>Origin</strong>: <br>
+      <strong>Type</strong>: Gauge (%)<br>
+      <strong>Frequency</strong>: <br>
+   </tr>
+   <tr>
+      <th>Recommended measurement</th>
+      <td> Changeme </td>
+   </tr>
+   <tr>
+      <th>Recommended alert thresholds</th>
+      <td><strong>Yellow warning</strong>: changeme<br>
+      <strong>Red critical</strong>: changeme</td>
+   </tr>
+   <tr>
+      <th>Recommended response</th>
+      <td>
+      Do the following:<br><br>
+         <ol>
+            <li>Thing.</li> 
+            <li>Thing.</li> 
+         </ol>
+      </td>
+   </tr>
+</table>
