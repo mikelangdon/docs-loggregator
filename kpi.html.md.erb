@@ -1020,7 +1020,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>5 minute average of per second delta of gorouter.bad_gateways</td>
+                <td>5 minute average of per second delta of gorouter.responses.5xx</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -1079,12 +1079,12 @@ Do the following:<br><br>
                         Do the following:<br><br>
                     <ol>
                         <li>For capacity needs, scale up or down the gorouter instances as necessary.</li>
-                        <li>For significant drops in current total routes, reference the 
-                            'gorouter.ms_since_last_registry_update' metric value for additional context.</li>
-                        <li>Look at the gorouter & route_emitter logs to look for connection issues to NATS.</li>
-                        <li>Then check bosh logs to see if the NATS, gorouter or route_emitter VMs are failing.</li>
+                        <li>For significant drops in current total routes, see the 
+                            <code>gorouter.ms\_since\_last\_registry\_update</code> metric value for additional context.</li>
+                        <li>Look at the gorouter and route\_emitter logs to look for connection issues to NATS.</li>
+                        <li>Then check bosh logs to see if the NATS, gorouter or route\_emitter VMs are failing.</li>
                         <li>Then look more broadly at the health of all VMs, particularly Diego related.</li>
-                        <li>If problems persist, pull gorouter and route_emitter logs, and contact Pivotal support.</li>
+                        <li>If problems persist, pull gorouter and route\_emitter logs and contact Pivotal support.</li>
                     </ol>
                     </td>
         </tr>
@@ -1135,8 +1135,12 @@ Do the following:<br><br>
                        + DopplerServer.TruncatingBuffer.totalDroppedMessages)<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td># messages dropped per sink. Lifetime (since VM start) total number of messages 
-                    intentionally dropped by Doppler from all of its sinks due to back pressure. 
+                <td>number of messages dropped per sink. Lifetime (since VM start) total number of messages 
+                    intentionally dropped by Doppler from all of its sinks due to back pressure.
+                    The metric `DopplerServer.TruncatingBuffer.totalDroppedMessages` is 
+                    being transitioned to `DopplerServer.doppler.shedEnvelopes`. 
+                    In PCF v1.10, both metrics are still present and should be combined to present a full picture of dropped messages. 
+                    In PCF v1.10, truncating buffer usage is approximately 5% of all possible traffic, primarily syslog drains.
                     <br><br>
                     <strong>Use</strong>: Indicates that there is too much ingress to the dopplers 
                     (i.e. too much traffic coming in), and/or that the Firehose consumers are not keeping pace; 
@@ -1149,7 +1153,7 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended measurement</th>
                 <td>Maximum delta per minute derived=(dopplerserver.doppler.shedenvelopes + dopplerServer.TruncatingBuffer.totalDroppedMessages) 
-                    over a 5 minute window</td>
+                    over a 5-minute window</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
