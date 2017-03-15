@@ -181,7 +181,10 @@ When observing a lot of container churn, do the following:<br><br>
                 <th width="25%">Description</th>
                 <td>Cumulative number of Tasks that the auctioneer failed to placed on Diego cells. Emitted during each auction.
                         <br><br>
-                <strong>Use</strong>: Failing auctions indicate a lack of enough resources within your environment and that you likely need to scale
+                <strong>Use</strong>: Failing task auctions indicate a lack of resources 
+                        within your environment and that you likely need to scale. 
+                        This indicator can also increase when the task is requesting an isolation segment, volume drivers, 
+                        or stack that is unavailable, either not deployed or lacking in sufficient resources to accept the work.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Counter (Float)<br>
@@ -189,7 +192,7 @@ When observing a lot of container churn, do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>per minute average of auctioneer.AuctioneerLRPAuctionsFailed averaged over a 5 minute window</td>
+                <td>per minute average of auctioneer.AuctioneerTaskAuctionsFailed averaged over a 5 minute window</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
