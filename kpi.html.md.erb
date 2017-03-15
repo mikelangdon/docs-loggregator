@@ -77,7 +77,7 @@ deployment and ensure it is in a good operational state.
    </tr>
    <tr>
       <th>Recommended measurement</th>
-      <td>Per minute average over a 5 minute window</td>
+      <td>Per minute average over a 5-minute window</td>
    </tr>
    <tr>
       <th>Recommended alert thresholds</th>
@@ -87,7 +87,6 @@ deployment and ensure it is in a good operational state.
    <tr>
       <th>Recommended response</th>
       <td>
-      Do the following:<br><br>
          <ol>
             <li>Investigate the health of your Diego cells to determine if they
             are the resource type causing the problem.</li> 
@@ -126,7 +125,7 @@ deployment and ensure it is in a good operational state.
    </tr>
    <tr>
       <th>Recommended response</th>
-      <td> Do the following:<br><br>
+        <td>
           <ol>
              <li>Check the health of the cells by reviewing the logs and looking for errors.</li>
              <li>Review IaaS console metrics.</li>
@@ -154,7 +153,7 @@ deployment and ensure it is in a good operational state.
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>per minute average of auctioneer.AuctioneerLRPAuctionsStarted averaged over a 5 minute window</td>
+                <td>per minute average of auctioneer.AuctioneerLRPAuctionsStarted averaged over a 5-minute window</td>
 </tr>
 <tr>
 <th>Recommended alert thresholds</th>
@@ -192,7 +191,7 @@ When observing a lot of container churn, do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>per minute average of auctioneer.AuctioneerTaskAuctionsFailed averaged over a 5 minute window</td>
+                <td>per minute average of auctioneer.AuctioneerTaskAuctionsFailed averaged over a 5-minute window</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -202,7 +201,6 @@ When observing a lot of container churn, do the following:<br><br>
 <tr>
 <th>Recommended response</th>
 <td>
-Do the following:<br><br>
     <ol>
     <li>Investigate the health of Diego cells.</li>
     <li>consider scaling additional cells using Ops Manager.</li>
@@ -244,7 +242,6 @@ Do the following:<br><br>
    <tr>
       <th>Recommended response</th>
       <td>
-          Do the following:<br><br>
           <ol>
               <li>Check Diego BBS logs for errors.</li>
               <li>Try vertically scaling the BBS VM resources up. 
@@ -283,7 +280,6 @@ Do the following:<br><br>
     <tr>
       <th>Recommended response</th>
       <td>
-          Do the following:<br><br>
           <ol>
               <li>Check CPU and Memory statistics in Ops Manager.</li>
               <li>Check Diego BBS logs faults/errors that could indicate issues with BBS.</li>
@@ -316,7 +312,7 @@ Do the following:<br><br>
    </tr>
    <tr>
       <th>Recommended measurement</th>
-      <td>Average over last 5 minutes of bbs.Domain.cf\_apps</td>
+      <td>Average over the last 5 minutes of <code>bbs.Domain.cf\_apps</code></td>
    </tr>
    <tr>
       <th>Recommended alert thresholds</th>
@@ -326,7 +322,6 @@ Do the following:<br><br>
    <tr>
       <th>Recommended response</th>
       <td>
-          Do the following:<br><br>
           <ol>
               <li>Check the nysnc bulker logs and Diego BBS logs.</li>
               <li>If problem continues, collect logs from the Brain and BBS VMs 
@@ -360,7 +355,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>5 minute average of bbs.LRPsExtra</td>
+                <td>5-minute average of bbs.LRPsExtra</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -370,7 +365,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Review the BBS component logs for proper operation/errors, looking for detailed error messages.</li>
                         <li>If the condition persists, collect Diego BBS logs, and contact Pivotal support.</li>
@@ -401,7 +395,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>5 minute average of bbs.LRPsMissing</td>
+                <td>5-minute average of bbs.LRPsMissing</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -411,7 +405,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Review the BBS component logs for proper operation/errors, looking for detailed error messages.</li>
                         <li>If the condition persists, collect Diego BBS logs, and contact Pivotal support.</li>
@@ -451,7 +444,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Look at BBS logs for apps that are crashing and their respective cells for indicators of app causation.</li>
                         <li>Pull BBS logs.</li>
@@ -492,7 +484,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                   Do the following:<br><br>
                    <ol>
                      <li>Scale up down CF components as necessary.</li>
                    </ol>
@@ -534,7 +525,7 @@ Do the following:<br><br>
    </tr>
    <tr>
       <th>Recommended measurement</th>
-      <td>The minimum amount of memory in a 30 minute window that the cell can allocate to containers.<br>
+      <td>The minimum amount of memory in a 30-minute window that the cell can allocate to containers.<br>
           <em>Implementation Tip</em>: Iterate through each Diego cell and grab the rep.CapacityRemainingMemory metric.
           Divide this metric by 1000 to get the value in GB. 
           Then compare it to your minimum capacity threshold, and count the number of cells that have enough free space.</td>
@@ -547,7 +538,6 @@ Do the following:<br><br>
    <tr>
       <th>Recommended response</th>
       <td>
-          Do the following:<br><br>
           <ol>
               <li>Assign more resources to the cells or assign more cells.</li>
                         <li>Scale additional Diego Cells using Ops Manager.</li>
@@ -586,7 +576,6 @@ Do the following:<br><br>
    <tr>
       <th>Recommended response</th>
       <td>
-          Do the following:<br><br>
           <ol>
               <li>Assign more resources to the cells or assign more cells</li>
               <li>Scale additional Diego Cells via Ops Manager</li>
@@ -623,7 +612,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Assign more resources to the cells or assign more cells</li>
                         <li>Scale additional Cells using Ops Manager.</li>
@@ -658,7 +646,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Investigate Diego BBS Logs for faults/errors.</li>
                         <li>If a particular cell or cells look to be problematic, 
@@ -700,7 +687,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Investigate Diego Cell Servers for faults/errors.</li>
                         <li>If a particular cell or cells look to be problematic, 
@@ -739,7 +725,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Investigate Diego BBS metrics and logs and cc-bridge log files for errors</li>
                     </ol>
@@ -758,7 +743,7 @@ Do the following:<br><br>
                     Emitted every 30 seconds.
                     <br><br>
                     <strong>Use</strong>: Increases in this metric indicate that the route emitter may be having 
-                    trouble maintaining an accurate routing table to broadcast to the gorouters. 
+                    trouble maintaining an accurate routing table to broadcast to the Gorouters. 
                     Alerting values need to be tuned per the deployment, based on historical data adjusted based on observations over time. 
                     The suggested starting point is &ge; 10 for the yellow threshold and &ge; 20 for the critical threshold. 
                     Pivotal has observed on Pivotal Web Services that above 20 s, the BBS may be failing.
@@ -779,7 +764,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Investigate routing table and Diego brains for errors.</li>
                     </ol>
@@ -816,7 +800,6 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>During upgrade, reduce the consul server nodes to 1, and then upgrade.</li>
                         <li>Outside of installation/update, consider disaster recovery for consul.</li>
@@ -838,7 +821,7 @@ Do the following:<br><br>
           <strong>Use</strong>: This metric can provide insight into the overall traffic flow through a PCF foundation. 
           For performance and capacity management, it is most useful to consider this metric a measure of router throughput, 
           and convert it as "Requests Per Second", by deriving 'per\_second(sum:gorouter.total\_requests{*})'. 
-          This allows for observed trends in throughput rate that may indicate a need to scale the gorouter.
+          This allows for observed trends in throughput rate that may indicate a need to scale the Gorouter.
           Alert values on this metric should be tuned to the specifics of the deployment based on historical observed trends. 
           <br><br>
           <strong>Origin</strong>: Doppler/Firehose<br>
@@ -859,11 +842,11 @@ Do the following:<br><br>
       <td>For the best optimization of the router, this "Requests Per Second" 
           derived throughput metric should be considered in context of router 
           latency and router VM CPU utilization.  From performance and load testing 
-          of the gorouter, it has been observed that at approximately 2500 requests 
+          of the Gorouter, it has been observed that at approximately 2500 requests 
           per second, latency can begin to increase. If an operator wants to increase 
-          throughput, while keeping latency low, it is suggested to scale the gorouters, 
+          throughput, while keeping latency low, it is suggested to scale the Gorouters, 
           either horizontally or vertically, while keeping an eye to the suggested 
-          gorouter CPU utilization metric (maximum 60-70% CPU utilization range).</td>
+          Gorouter CPU utilization metric (maximum 60-70% CPU utilization range).</td>
    </tr>
 </table>
 
@@ -900,24 +883,23 @@ Do the following:<br><br>
                 <th>Recommended response</th>
                 <td>Extended periods of high latency can point to several factors. 
                     The router latency measure includes network and app latency impacts as well.<br>
-                    Do the following:<br><br>
                     <ol>
                         <li>First inspect logs for possible network issues, or indicators of misbehaving apps.</li>
                         <li>If it appears the router may need to scale due to on-going traffic congestion, 
                             it is not recommended to scale on the latency metric alone. 
                             Instead, look to the CPU utilization of the router VMs.</li>
                         <li>It is suggested to keep CPU utilization within a maximum 60-70% range.</li>
-                        <li>Resolve high utilization by scaling the gorouter.</li>
+                        <li>Resolve high utilization by scaling the Gorouter.</li>
                         <li>If an operator wants to increase throughput, while keeping latency low, 
-                            it is suggested to scale the gorouters, either horizontally or vertically, 
-                            while keeping an eye to the suggested gorouter CPU utilization metric.</li>
+                            it is suggested to scale the Gorouters, either horizontally or vertically, 
+                            while keeping an eye to the suggested Gorouter CPU utilization metric.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
 
-<a name="ms_since_last_registry_update"></a>
+<a name="mssincelastregistryupdate"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>gorouter.ms\_since\_last\_registry\_update<br><br></th></tr>
         <tr>
@@ -944,12 +926,11 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
-                        <li>Look at the gorouter and route_emitter logs to look for connection issues to NATS.</li>
-                        <li>Check bosh logs to see if the NATS, gorouter or route_emitter VMs are failing.</li>
+                        <li>Look at the Gorouter and route_emitter logs to look for connection issues to NATS.</li>
+                        <li>Check the BOSH logs to see if the NATS, Gorouter or route_emitter VMs are failing.</li>
                         <li>Then look more broadly at the health of all VMs, particularly Diego related.</li>
-                        <li>If problems persist, pull gorouter and route_emitter logs, and contact 
+                        <li>If problems persist, pull Gorouter and route_emitter logs, and contact 
                             Pivotal support to say there are consistently long delays in route registry.</li>
                     </ol>
                     </td>
@@ -959,19 +940,17 @@ Do the following:<br><br>
 
 <a name="bad_gateways"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>gorouter.bad_gateways<br><br></th></tr>
+     <tr><th colspan="2" style="text-align: center;"><br>gorouter.bad\_gateways<br><br></th></tr>
      <tr>
          <th width="25%">Description</th>
-            <td>Lifetime number of bad gateways (502 response from router itself) 
-                    since this instance of the router has started. Emitted every 5 seconds.
+            <td>The lifetime (since the Router VM started) number of bad gateways, 502 response from router itself.<br>
+                The Gorouter emits a 502 bad gateway error when it has a route in the routing table 
+                and, in attempting to make a connection to the backend, finds that backend not there, that it doesn't exist.
                     <br><br>
-                    <strong>Use</strong>: The gorouter emits a 502 bad gateway error 
-                    when it has a route in the routing table and the attempt to make a 
-                    connection to the backend finds that backend not there (i.e. doesn't exist). 
-                    This indicates potential stale routing tables. 
-                    Stale routing tables further point to an issue in the route register management plane, 
-                    which indicates that something has likely changed with the location of the containers. 
-                    Unexpected increases in this metric should be investigated more deeply.
+                    <strong>Use</strong>: Indicates that route tables might be stale.
+                    Stale routing tables suggest an issue in the route register management plane, 
+                    which indicates that something has likely changed with the locations of the containers. 
+                    Always investigate unexpected increases in this metric.
                     <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Count (Integer, Lifetime)<br>
@@ -980,7 +959,7 @@ Do the following:<br><br>
      </tr>
      <tr>
                 <th>Recommended measurement</th>
-                <td>5 minute average of per second delta of gorouter.bad_gateways</td>
+                <td>5-minute average of per second delta of gorouter.bad\_gateways</td>
      </tr>
      <tr>
                 <th>Recommended alert thresholds</th>
@@ -990,18 +969,20 @@ Do the following:<br><br>
      <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
-                        <li>Look at the gorouter and route_emitter logs to look for connection issues to NATS.</li>
-                        <li>Check bosh logs to see if the NATS, gorouter or route_emitter VMs are failing.</li>
-                        <li>Then look more broadly at the health of all VMs, particularly Diego related.</li>
-                        <li>If problems persist, pull gorouter and route_emitter logs, and contact 
+                        <li>Look in the Gorouter and route\_emitter logs for connection issues to NATS.</li>
+                        <li>Check the BOSH logs to see if the NATS, Gorouter, or route_emitter VMs are failing.</li>
+                        <li>Look broadly at the health of all VMs, particularly Diego-related VMs.</li>
+                        <li>If problems persist, pull Gorouter and route_emitter logs, and contact 
                             Pivotal support to say there has been an unusual increase in router bad gateway responses.</li>
-                        <li>step</li>
                     </ol>
                     </td>
      </tr>
 </table>
+
+Q: Is there a simple way to say “route register management plane”? e.g. “route registration”?
+
+
 
 
 <a name="responses.5xx"></a>
@@ -1009,13 +990,12 @@ Do the following:<br><br>
      <tr><th colspan="2" style="text-align: center;"><br>gorouter.responses.5xx<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Lifetime number of requests completed by component since this instance of the 
+                <td>The lifetime (since the Router VM started) number of requests completed by the component  of the 
                     router has started for http status family 5xx (Server Errors)
                     <br><br>
-                    <strong>Use</strong>: The more common cause of a large increase in 5xx responses 
-                    is a repeatedly crashing app. Could also be indicative of response issues from 
-                    various apps on the platform. Therefore a unexpectedly high increase 
-                    in this metric should be investigated more deeply.
+                    <strong>Use</strong>: A repeatedly crashing app is often the cause of a big increase in 5xx responses.
+                    However, response issues from apps can also cause an increase in 5xx responses.
+                    Always investigate an unexpected increase in this metric.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Counter (Integer)<br>
@@ -1023,7 +1003,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>5 minute average of per second delta of gorouter.responses.5xx</td>
+                <td>5-minute average of the per second delta of <code>gorouter.responses.5xx</code></td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -1033,35 +1013,38 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
-                        <li>Look for Out Of Memory errors or other app level errors.</li>
-                        <li>As a temporary band-aid, ensure the troublesome app is scaled beyond one instance.</li>
+                        <li>Look for out-of-memory errors and other app-level errors.</li>
+                        <li>As a temporary measure, ensure that the troublesome app is scaled to more than one instance.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
+Q: Okay that I replaced "this instance of the router" with "since the Router VM started"?
+
+Q: I replaced "various apps on the platform" with just "apps". Okay?
 
 <a name="total_routes"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>gorouter.total_routes<br><br></th></tr>
+     <tr><th colspan="2" style="text-align: center;"><br>gorouter.total\_routes<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Current total number of routes registered with gorouter in a PCF install
+                <td>The current total number of routes registered with the Gorouter
                     <br><br>
-                    <strong>Use</strong>: Indicates uptake, and gives a picture of the overall 
-                    growth of the environment for capacity planning.  May also be leveraged 
-                    as an alert mechanism for extreme high/low variance when deployment standard ranges are known. 
-                    For example, dramatic increases in total routes outside of expected business 
-                    events may point to possible denial of service attacks. 
-                    Or dramatic decreases in this metric volume may indicate a problem with 
-                    the route registration process (occurs periodically), indicating a potential 
-                    app outage and/or that something in the route register management plane may have failed. 
-                    Regarding monitoring for router negative cases, the Router component team 
-                    recommends that 'gorouter.total_routes' is a better visualization metric to draw 
-                    attention to a dramatic drop via dashboard monitoring, but the metric 
-                    'gorouter.ms_since_last_registry_update' is a superior metric to generate triggered alerts from.
+                    <strong>Use</strong>: Indicates uptake and gives a picture of the overall 
+                    growth of the environment for capacity planning.
+                    Use this metric to alert you if the number of routes falls outside of the normal
+                    range for your deployment.
+                    For example, dramatic increases in the total routes outside of expected business 
+                    events might point to a denial-of-service attack. 
+                    Or, dramatic decreases in this metric volume might indicate a problem with 
+                    the route registration process (occurs periodically), such as an
+                    app outage or that something in the route register management plane has failed.<br><br>
+                    This metric is good to draw attention to a dramatic drop
+                    on a dashboard. However, for alerting, trigger alerts from the 
+                    <code>gorouter.ms\_since\_last\_registry\_update</code> and not the <code>gorouter.total\_routes</code>
+                    metric. 
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Gauge (Float)<br>
@@ -1069,7 +1052,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>5 minute average of per second delta of gorouter.bad_gateways</td>
+                <td>5-minute average of per second delta of <code>gorouter.bad_gateways</code></td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -1079,19 +1062,33 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
-                        <li>For capacity needs, scale up or down the gorouter instances as necessary.</li>
+                        <li>For capacity needs, scale up or down the router VMs as necessary.</li>
                         <li>For significant drops in current total routes, see the 
-                            <code>gorouter.ms\_since\_last\_registry\_update</code> metric value for additional context.</li>
-                        <li>Look at the gorouter and route\_emitter logs to look for connection issues to NATS.</li>
-                        <li>Then check bosh logs to see if the NATS, gorouter or route\_emitter VMs are failing.</li>
-                        <li>Then look more broadly at the health of all VMs, particularly Diego related.</li>
-                        <li>If problems persist, pull gorouter and route\_emitter logs and contact Pivotal support.</li>
+                           <a href="#mssincelastregistryupdate"> <code>gorouter.ms\_since\_last\_registry\_update</code></a>
+                            metric value for additional context.</li>
+                        <li>Look at the Gorouter and route\_emitter logs to look for connection issues to NATS.</li>
+                        <li>Check the BOSH logs to see if the NATS, Gorouter or route\_emitter VMs are failing.</li>
+                        <li>Look broadly at the health of all VMs, particularly Diego-related VMs.</li>
+                        <li>If problems persist, pull the Gorouter and route\_emitter logs and contact Pivotal support.</li>
                     </ol>
                     </td>
         </tr>
 </table>
+
+Q: What is a "router negative case"?
+
+Q: Is my rewrite of this okay? "
+                    Regarding monitoring for router negative cases, the Router component team 
+                    recommends that 'gorouter.total\_routes' is a better visualization metric to draw 
+                    attention to a dramatic drop via dashboard monitoring, but the metric 
+                    'gorouter.ms\_since\_last\_registry\_update' is a superior metric to generate triggered alerts from.:
+
+Q: I changed "scale up or down the gorouter instances" to "scale up or down the router VMs" (We don't mention gorouter instances anywhere else — I assume that they are the same?)
+
+Q: When is router used and when is Gorouter used? Are they the same or different? Can we standardize on this together? 
+
+Q: Is there a simple way to say "route register management plane has failed"? e.g. "route registration has failed"?
 
 ## <a id="doppler-server"></a> Doppler Server Metrics
 
@@ -1100,11 +1097,11 @@ Do the following:<br><br>
      <tr><th colspan="2" style="text-align: center;"><br>DopplerServer.listeners.receivedEnvelopes<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td># messages received by doppler. Total number of messages received across 
-                    all of Doppler’s listeners (UDP, TCP, TLS, GRPC).
+                <td>The total number of messages received across 
+                    all of the Doppler’s listeners (UDP, TCP, TLS, and GRPC).
                     <br><br>
                     <strong>Use</strong>: Provides insight into how much traffic is being 
-                    handled by the logging system. This serves as an important indicator for consistent logging.
+                    handled by the logging system. This metric is an indicator of logging consistency.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Counter (Integer)<br>
@@ -1112,7 +1109,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Maximum delta per minute dopplerserver.listeners.receivedEnvelopes over a 5 minute window</td>
+                <td>Maximum delta per minute of <code>dopplerserver.listeners.receivedEnvelopes</code> over a 5-minute window</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -1122,15 +1119,17 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>Scale up or down the Firehose log receiver and dopplers.</li>
-                        <li>Recommendation from Firehose team: scaling down might be good for capacity planning, 
-                            but generally is not recommended</li>
+                        Scale up or down the Firehose log receiver and Dopplers.<br>
+                        Recommendation from Firehose team: scaling down might be good for capacity planning, 
+                            but generally is not recommended.
                     </ol>
                     </td>
         </tr>
 </table>
+
+Q: How to rewrite the response? "Scale up the Firehose log receiver and the Dopplers" 
+(How does one do this? provide a link to elsewhere in the doc.)
+Why is scaling down not recommended? What can happen? We shouldn't reference internal teams in a customer-facing doc. 
 
 <a name="deriveddopplerserver.doppler"></a>
 <table>
@@ -1138,16 +1137,16 @@ Do the following:<br><br>
                        + DopplerServer.TruncatingBuffer.totalDroppedMessages)<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>number of messages dropped per sink. Lifetime (since VM start) total number of messages 
-                    intentionally dropped by Doppler from all of its sinks due to back pressure.
+                <td>The number of messages dropped per sink: the lifetime (since the VM started) total number of messages 
+                    intentionally dropped by Doppler from all of its sinks due to back pressure.<br>
                     The metric `DopplerServer.TruncatingBuffer.totalDroppedMessages` is 
                     being transitioned to `DopplerServer.doppler.shedEnvelopes`. 
                     In PCF v1.10, both metrics are still present and should be combined to present a full picture of dropped messages. 
                     In PCF v1.10, truncating buffer usage is approximately 5% of all possible traffic, primarily syslog drains.
                     <br><br>
-                    <strong>Use</strong>: Indicates that there is too much ingress to the dopplers 
-                    (i.e. too much traffic coming in), and/or that the Firehose consumers are not keeping pace; 
-                    both result in dropped messages. This serves as an important indicator for consistent logging.
+                    <strong>Use</strong>: Set an alert to indicate if there is too much traffic coming in to the Dopplers 
+                     or if the Firehose consumers are not keeping pace. 
+                     Both issues result in dropped messages. This metric is an important indicator of consistent logging.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Counter (Integer)<br>
@@ -1155,7 +1154,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Maximum delta per minute derived=(dopplerserver.doppler.shedenvelopes + dopplerServer.TruncatingBuffer.totalDroppedMessages) 
+                <td>Maximum delta per minute of <code>derived=(dopplerserver.doppler.shedenvelopes + dopplerServer.TruncatingBuffer.totalDroppedMessages)</code>
                     over a 5-minute window</td>
         </tr>
         <tr>
@@ -1166,9 +1165,8 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
-                        <li>Scale up the Firehose log receiver and dopplers.</li>
+                        <li>Scale up the Firehose log receiver and Dopplers.</li>
                     </ol>
                     </td>
         </tr>
@@ -1181,10 +1179,11 @@ Do the following:<br><br>
      <tr><th colspan="2" style="text-align: center;"><br>system.healthy<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>`1` means the system is healthy, and `0` means the system is not healthy
+                <td>`1` means the system is healthy, and `0` means the system is not healthy.
                 <br><br>
-                <strong>Use</strong>: The most important Bosh Metric to monitor, it indicates whether a 
-                given VM emitting this metric is healthy, and points towards the overall health status of your system.
+                <strong>Use</strong>: This is the most important BOSH metric to monitor. 
+                 It indicates if the VM emitting the metric is healthy.
+                 Review this metric for all VMs to estimate the overall health of the system.
                  <br><br>
                  <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                  <strong>Type</strong>: Gauge (Float, 0-1)<br>
@@ -1192,7 +1191,7 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Average over last 5 minutes of system.healthy</td>
+                <td>Average over the last 5 minutes of <code>system.healthy</code></td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -1202,11 +1201,8 @@ Do the following:<br><br>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>Investigate CF logs for the unhealthy component(s). 
-                        Multiple unhealthy VM signals can point to problems with the underlying IAAS layer.</li>
-                    </ol>
+                        Investigate CF logs for the unhealthy component(s).<br>
+                        Multiple unhealthy VMs signals problems with the underlying IAAS layer.
                     </td>
         </tr>
 </table>
@@ -1217,78 +1213,74 @@ Do the following:<br><br>
      <tr><th colspan="2" style="text-align: center;"><br>system.mem.percent<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>System Memory % - Percentage of memory used on the VM 
+                <td>System Memory — Percentage of memory used on the VM 
                         <br><br>
-                <strong>Use</strong>: Indicates there is a continued period of low free RAM                 <br><br>
+                 <strong>Use</strong>: Set an alert and investigate if the free RAM is low over an extended period. 
+                 <br><br>
                  <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                  <strong>Type</strong>: Gauge (%)<br>
                  <strong>Frequency</strong>: 60 s<br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Average over last 10 minutes of system.mem.percent</td>
+                <td>Average over the last 10 minutes of <code>system.mem.percent</code></td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: &ge; 80 <br>
-                <strong>Red critical</strong>:&ge; 90</td>
+                <td><strong>Yellow warning</strong>: &ge; 80%<br>
+                <strong>Red critical</strong>:&ge; 90%</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>It can depend on the job the metric is associated with.</li>
-                        <li>If appropriate scale affected jobs out and monitor for improvement.</li>
-                    </ol>
-                    </td>
+                    The response depends on the job.
+                </td>
         </tr>
 </table>
 
+Q: Can we make examples for the recommended responses? If the job is x, then y.
 
 <a name="disk.system.percent"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>system.disk.system.percent<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>System Disk % - Percentage of system disk used on the VM
+                <td>System disk — Percentage of the system disk used on the VM
                         <br><br>
-                <strong>Use</strong>: Indicates that system disk is almost full                 <br><br>
+                 <strong>Use</strong>: Set an alert to indicate when the system disk is almost full.
+                 <br><br>
                  <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                  <strong>Type</strong>: Gauge (%)<br>
                  <strong>Frequency</strong>: 60 s<br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Average over last 30 minutes of system.disk.system.percent</td>
+                <td>Average over the last 30 minutes of <code>system.disk.system.percent</code></td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: &ge; 80</br>
-                <strong>Red critical</strong>: &ge; 90</td>
+                <td><strong>Yellow warning</strong>: &ge; 80%</br>
+                <strong>Red critical</strong>: &ge; 90%</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
-                    <ol>
-                        <li>Investigate what is filling the Jobs system partition. 
-                        This partition should typically not fill as BOSH deploys jobs to use ephemeral and persistent disks.</li>
-                    </ol>
+                    Investigate what is filling the jobs system partition. <br>
+                    This partition should not fill because BOSH deploys jobs to use ephemeral and persistent disks.</li>
                     </td>
         </tr>
 </table>
 
 
-<a name="disk.epheremal.percent"></a>
+<a name="disk.ephemeral.percent"></a>
 <table>
-     <tr><th colspan="2" style="text-align: center;"><br>system.disk.epheremal.percent<br><br></th></tr>
+     <tr><th colspan="2" style="text-align: center;"><br>system.disk.ephemeral.percent<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Ephemeral Disk % - Percentage of ephemeral disk used on the VM
+                <td>Ephemeral disk — Percentage of the ephemeral disk used on the VM
                 <br><br>
-               <strong>Use</strong>: Alert for further investigation if ephemeral 
-                disk consumption is too high for a given job for an extended period.
+               <strong>Use</strong>: Set an alert and investigate further if the ephemeral 
+                disk consumption is too high for a given job over an extended period.
                 <br><br>
                 <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                 <strong>Type</strong>: Gauge (%)<br>
@@ -1296,21 +1288,20 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Average over last 30 minutes of system.disk.ephermal.percent</td>
+                <td>Average over the last 30 minutes of <code>system.disk.ephermal.percent</code></td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: &ge; 80</br>
-                <strong>Red critical</strong>: &ge; 90</td>
+                <td><strong>Yellow warning</strong>: &ge; 80%</br>
+                <strong>Red critical</strong>: &ge; 90%</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Issue ```bosh vms --details``` to view jobs on affected deployments.</li>
                         <li>Determine cause of the data consumption, and, if appropriate, 
-                            either increase disk space or scale affected jobs out.</li>
+                            increase disk space or scale up the affected jobs.</li>
                     </ol>
                     </td>
         </tr>
@@ -1322,50 +1313,56 @@ Do the following:<br><br>
      <tr><th colspan="2" style="text-align: center;"><br>system.disk.persistent.percent<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Persistent Disk % - Percentage of persistent disk used on the VM
+                <td>Persistent disk — Percentage of persistent disk used on the VM
                         <br><br>
-                <strong>Use</strong>: Alert for further investigation if persistent disk consumption is too high 
-                for a given job for an extended period.
+                <strong>Use</strong>: Set an alert and investigate further if the persistent disk usage for a job is too high 
+                over an extended period.
                         <br><br>
-                                 <br><br>
                  <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                  <strong>Type</strong>: Gauge (%)<br>
                  <strong>Frequency</strong>: 60 s<br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Average over last 30 minutes of system.disk.persistent.percent</td>
+                <td>Average over the last 30 minutes of <code>system.disk.persistent.percent<code></td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: &ge; 80<br>
-                <strong>Red critical</strong>: &ge; 90</td>
+                <td><strong>Yellow warning</strong>: &ge; 80%<br>
+                <strong>Red critical</strong>: &ge; 90%</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Do the following:<br><br>
                     <ol>
                         <li>Issue ```bosh vms --details``` to view jobs on affected deployments.</li>
                         <li>Determine cause of the data consumption, and, if appropriate, 
-                            either increase disk space or scale affected jobs out.</li>
+                            increase disk space or scale up affected jobs.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
+Q: Is there any difference between use and consumption?
+
+Q: How long is an extended period?
+
+Q: Is there any difference between an extended period and a continued period?
+
+Q: Is there any difference between scale out and scale up?
 
 <a name="cpu.user"></a>
 <table>
      <tr><th colspan="2" style="text-align: center;"><br>system.cpu.user<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>CPU Utilization (%) - Amount of CPU spent in user processes
+                <td>CPU utilization — The percentage of CPU spent in user processes
                 <br><br>
-                <strong>Use</strong>: Alert for further investigation if CPU Utilization is 
-                too high for a given job.
-                For monitoring of router performance, CPU utilization of the Router VM is 
-                recommended as a key capacity scaling indicator.
+                <strong>Use</strong>: Set an alert and investigate further if the CPU utilitization is
+                too high for a given job.<br>
+                For monitoring router performance, CPU utilization of the router VM is 
+                the recommended key capacity scaling indicator.
+                For more information, see <a href="./key-cap-scaling.html#system.cpu.user">Gorouter Latency and Throughput</a>.
                 <br><br>
                 <strong>Origin</strong>: JMX Bridge or BOSH HM Forwarder<br>
                 <strong>Type</strong>: Gauge (%)<br>
@@ -1373,25 +1370,26 @@ Do the following:<br><br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Average over last 5 minutes of system.cpu.user</td>
+                <td>Average over the last 5 minutes of <code>system.cpu.user</code></td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
-                <td><strong>Yellow warning</strong>: &ge; 85<br>
-                <strong>Red critical</strong>: &ge; 95</td>
+                <td><strong>Yellow warning</strong>: &ge; 85%<br>
+                <strong>Red critical</strong>: &ge; 95%</td>
         </tr>
         <tr>
                 <th>Recommended response</th>
                 <td>
-                  High CPU Utilization Do the following:<br><br>
                     <ol>
-                        <li>Investigate cause of spike.</li>
-                        <li>Possibly scale affected job if cause is normal workload increase.</li>
+                        <li>Investigate the cause of the spike.</li>
+                        <li>If the cause is a normal workload increase, then scale up the affected jobs.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
+Q: WHAT is a "user process"? 
 
+Q: WHAT is a "given job"? 
 
 
