@@ -1,5 +1,5 @@
 ---
-title: Key Performance Indicators 
+title: STALE don't use: Key Performance Indicators 
 owner: PCF Metrics Platform Monitoring
 ---
 
@@ -223,7 +223,7 @@ When observing a lot of container churn, do the following:<br><br>
           <br><br>
           <strong>Use</strong>: If the convergence run begins taking too long, 
           it is possible that apps or tasks are crashing and not being restarted. 
-          This symptom can also be a proxy for indicating loss of connectivity to the BBS database.
+          This symptom can also indicate loss of connectivity to the BBS database.
           <br><br>
           <strong>Origin</strong>: Doppler/Firehose<br>
           <strong>Type</strong>: Gauge (Integer in ns)<br>
@@ -282,7 +282,7 @@ When observing a lot of container churn, do the following:<br><br>
       <td>
           <ol>
               <li>Check CPU and Memory statistics in Ops Manager.</li>
-              <li>Check Diego BBS logs faults/errors that could indicate issues with BBS.</li>
+              <li>Check Diego BBS logs faults and errors that could indicate issues with BBS.</li>
               <li>Try scaling the BBS VM resources up. For example, add more CPUs/memory 
                   depending on its system.cpu/system.memory metrics.</li>
               <li>If the above steps do not solve the issue, then collect a sample of the cell VM logs 
@@ -304,7 +304,7 @@ When observing a lot of container churn, do the following:<br><br>
           <br><br>
           <strong>Use</strong>: cf-apps is used to translate Cloud Controller desired state into Diego implementation. 
           Without freshness, changes in Cloud Controller state is not guaranteed to propagate through the system. 
-          If Cloud Controller and Diego are out of sync, the set of running applications can stray 
+          If Cloud Controller and Diego are out of sync, the running applications can stray 
           from the set of desired applications.
           <br><br>
           <strong>Origin</strong>: Doppler/Firehose<br>
@@ -333,6 +333,7 @@ When observing a lot of container churn, do the following:<br><br>
 </table>
 
 Q: How are "CF apps" different from all the other apps mentioned on this page? Can I just write "apps" above?
+(This applies to other metrics too.)
 <a name="LRPsExtra"></a>
 
 Q: I think much of the table above needs a rewrite in language that our customers will easily understand.
@@ -544,7 +545,7 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
       <td>
           <ol>
               <li>Assign more resources to the cells or assign more cells.</li>
-                        <li>Scale additional Diego Cells using Ops Manager.</li>
+                        <li>Scale additional Diego cells using Ops Manager.</li>
                     </ol>
                     </td>
         </tr>
@@ -582,7 +583,7 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
       <td>
           <ol>
               <li>Assign more resources to the cells or assign more cells</li>
-              <li>Scale additional Diego Cells via Ops Manager</li>
+              <li>Scale additional Diego cells via Ops Manager</li>
           </ol>
                     </td>
         </tr>
@@ -597,7 +598,8 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
                     <strong>Use</strong>: Indicates the available cell disk. 
                 Low disk capacity could prevent app scaling and new deployments.
                 Similar to rep.CapacityRemainingMemory, it can be meaningful to assess how many chunks of free disk space are above a given threshold. 
-                As Diego staging tasks can fail without at least 4GB free, this recommend red threshold is based on the minimum disk capacity 
+                As Diego staging tasks can fail without at least 4GB free, this recommend red 
+                threshold is based on the minimum disk capacity 
                 across the deployment falling below 4GB in the prior 5 minutes.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
@@ -618,7 +620,7 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
                 <td>
                     <ol>
                         <li>Assign more resources to the cells or assign more cells</li>
-                        <li>Scale additional Cells using Ops Manager.</li>
+                        <li>Scale additional cells using Ops Manager.</li>
                     </ol>
                     </td>
         </tr>
@@ -630,12 +632,12 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
      <tr><th colspan="2" style="text-align: center;"><br>rep.RepBulkSyncDuration<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Time in ns that the cell rep took to synchronize the ActualLRPs it has claimed with its actual garden containers. 
+                <td>Time in ns that the Cell Rep took to synchronize the ActualLRPs it has claimed with its actual garden containers. 
                         <br><br>
                 <strong>Use</strong>: Sync times that are too high may indicate issues with the BBS.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
-                 <strong>Type</strong>: Gauge(Float in ns)<br>
+                 <strong>Type</strong>: Gauge (Float in ns)<br>
                  <strong>Frequency</strong>: 30 s<br>
         </tr>
         <tr>
@@ -651,14 +653,15 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
                 <th>Recommended response</th>
                 <td>
                     <ol>
-                        <li>Investigate Diego BBS Logs for faults/errors.</li>
+                        <li>Investigate Diego BBS logs for faults and errors.</li>
                         <li>If a particular cell or cells look to be problematic, 
-                            pull logs for that cell, as well as the BBS logs prior to contacting Pivotal Support.</li>
+                            pull logs for that cell, as well as the BBS logs before contacting Pivotal Support.</li>
                     </ol>
                     </td>
         </tr>
 </table>
 
+Q: Are all "cells" "Diego cells"?
 
 <a name="UnhealthyCell"></a>
 <table>
@@ -692,9 +695,9 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
                 <th>Recommended response</th>
                 <td>
                     <ol>
-                        <li>Investigate Diego Cell Servers for faults/errors.</li>
+                        <li>Investigate Diego cell servers for faults and errors.</li>
                         <li>If a particular cell or cells look to be problematic, 
-                            pull logs for that cell, as well as the BBS logs prior to contacting Pivotal Support.</li>
+                            pull logs for that cell, as well as the BBS logs before contacting Pivotal Support.</li>
                     </ol>
                     </td>
         </tr>
@@ -711,7 +714,7 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
                 <td>Time in ns that the nsync-bulker took to synchronize CF apps and Diego DesiredLRPs.
                     <br><br>
                     <strong>Use</strong>: Cloud Controller and Diego Brain should be kept synchronized. 
-                    This symptom can be a proxy for indicating the BBS database is in an unhealthy state. 
+                    This symptom can indicate that the BBS database is in an unhealthy state. 
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Gauge (Float in ns)<br>
@@ -719,7 +722,8 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Maximum over the last 15 minutes of <code>nsync\_bulker.DesiredLRPSyncDuration</code> divided by 1,000,000,000</td>
+                <td>Maximum over the last 15 minutes of <code>nsync\_bulker.DesiredLRPSyncDuration</code> 
+                    divided by 1,000,000,000</td>
         </tr>
         <tr>
                 <th>Recommended alert thresholds</th>
@@ -729,10 +733,12 @@ Q: The master table says that the emit frequency is 30 s but also that it is "Em
         <tr>
                 <th>Recommended response</th>
                 <td>
-                        Investigate Diego BBS metrics and logs and cc-bridge log files for errors
+                        Investigate Diego BBS metrics and logs and Cloud Controller Bridge log files for errors.
                     </td>
         </tr>
 </table>
+
+Q: Is there a difference between "logs" and "log files"?
 
 ##<a id="route_emitter"></a>Diego Router Emitter Metrics
 
