@@ -25,12 +25,12 @@ metrics, thresholds, and alerts based on learning from their deployments.
    <tr><th colspan="2" style="text-align: center;"><br> auctioneer.AuctioneerLRPAuctionsFailed<br><br></th></tr>
    <tr>
       <th width="25%">Description</th>
-      <td>The cumulative number of Long Running Processes (LRP) instances that the auctioneer failed to place on Diego cells <br><br>
+      <td>The cumulative number of Long Running Process (LRP) instances that the auctioneer failed to place on Diego cells <br><br>
    
-      <strong>Use</strong>: This metric can indicates that PCF is out of container space or that there is a lack of resources within your environment.
+      <strong>Use</strong>: This metric can indicate that PCF is out of container space or that there is a lack of resources within your environment.
    
       This error is most common due to capacity issues, for example, if cells do not have 
-      enough resources or if cells are blipping in and out of health.
+      enough resources or if cells are going back and forth between a healthy and unhealthy state.
       <br><br>
       <strong>Origin</strong>: Doppler/Firehose<br>
       <strong>Type</strong>: Counter, integer<br>
@@ -105,7 +105,7 @@ metrics, thresholds, and alerts based on learning from their deployments.
                 <td>Cumulative number of LRP instances that the auctioneer successfully placed on Diego cells.
                         <br><br>
                 <strong>Use</strong>: Provides a sense of running system activity levels in your environment. 
-                Can also give you a sense of how many application instances have been started over time.
+                Can also give you a sense of how many app instances have been started over time.
                 The recommended measurement, below, can help indicate a lot of container churn. 
                 However, for capacity planning purposes, it is more helpful to observe deltas over a long time window. 
                  <br><br>
@@ -115,7 +115,7 @@ metrics, thresholds, and alerts based on learning from their deployments.
         </tr>
         <tr>
                 <th>Recommended measurement</th>
-                <td>Per minute average of <code>auctioneer.AuctioneerLRPAuctionsStarted</code> averaged over a 5-minute window</td>
+                <td>Per minute average over a 5-minute window</td>
 </tr>
 <tr>
 <th>Recommended alert thresholds</th>
@@ -139,7 +139,7 @@ When observing a lot of container churn, do the following:<br><br>
      <tr><th colspan="2" style="text-align: center;"><br>auctioneer.AuctioneerTaskAuctionsFailed<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Cumulative number of Tasks that the auctioneer failed to placed on Diego cells.
+                <td>Cumulative number of Tasks that the auctioneer failed to place on Diego cells.
                         <br><br>
                 <strong>Use</strong>: Failing Task auctions indicate a lack of resources 
                         within your environment and that you likely need to scale. 
@@ -165,7 +165,7 @@ When observing a lot of container churn, do the following:<br><br>
     <ol>
     <li>Investigate the health of Diego cells.</li>
     <li>Consider scaling additional cells using Ops Manager.</li>
-    <li>If scaling cells doesn't solve the problem, 
+    <li>If scaling cells does not solve the problem, 
                         then pull Diego brain logs and BBS logs for troubleshooting, 
                         and contact Pivotal Support telling them that Task auctions are failing.</li>
     </ol>
@@ -183,13 +183,13 @@ When observing a lot of container churn, do the following:<br><br>
       <td>Time in ns that the BBS took to run its LRP convergence pass. 
           <br><br>
           <strong>Use</strong>: If the convergence run begins taking too long, 
-          maybe apps or Tasks are crashing and not being restarted. 
+          apps or Tasks may be crashing without restarting. 
           This symptom can also indicate loss of connectivity to the BBS database.
           <br><br>
           <strong>Origin</strong>: Doppler/Firehose<br>
           <strong>Type</strong>: Gauge (Integer in ns)<br>
           <strong>Frequency</strong>: During event,
-                  every 30 seconds when LRP convergence runs, emission should be constant on a running, Diego-based, PCF deployment
+                  every 30 seconds when LRP convergence runs, emission should be constant on a running deployment
    </tr>
    <tr>
       <th>Recommended measurement</th>
@@ -206,7 +206,7 @@ When observing a lot of container churn, do the following:<br><br>
           <ol>
               <li>Check BBS logs for errors.</li>
               <li>Try vertically scaling the BBS VM resources up. 
-              For example, add more CPUs/memory depending on its system.cpu/system.memory metrics.</li>
+              For example, add more CPUs/memory depending on its <code>system.cpu</code>/<code>system.memory</code> metrics.</li>
               <li>If that does not solve the issue, pull the BBS logs and contact Pivotal Support 
                   for additional troubleshooting.
           </ol>
@@ -222,13 +222,13 @@ When observing a lot of container churn, do the following:<br><br>
       <th width="25%">Description</th>
       <td>Time in ns that the BBS took to handle requests, aggregated across all its API endpoints. 
           <br><br>
-          <strong>Use</strong>: If this rises, it indicates that the PCF API is slowing. 
-          Response to certain "cf" commands is slow if request latency is high.
+          <strong>Use</strong>: If this metric rises, the PCF API is slowing. 
+          Response to certain <code>cf</code> commands is slow if request latency is high.
           <br><br>
           <strong>Origin</strong>: Doppler/Firehose<br>
           <strong>Type</strong>: Gauge (Integer in ns)<br>
           <strong>Frequency</strong>: During event, when the BBS API handles requests, 
-                  emission should be constant on a running, Diego-based, PCF deployment<br>
+                  emission should be constant on a running deployment<br>
     </tr>
     <tr>
       <th>Recommended measurement</th>
@@ -246,7 +246,7 @@ When observing a lot of container churn, do the following:<br><br>
               <li>Check CPU and memory statistics in Ops Manager.</li>
               <li>Check BBS logs for faults and errors that can indicate issues with BBS.</li>
               <li>Try scaling the BBS VM resources up. For example, add more CPUs/memory 
-                  depending on its system.cpu/system.memory metrics.</li>
+                  depending on its <code>system.cpu</code>/<code>system.memory</code> metrics.</li>
               <li>If the above steps do not solve the issue, then collect a sample of the cell logs 
                   from the BBS VMs and contact Pivotal Support to troubleshoot further.
           </ol>
@@ -260,15 +260,17 @@ When observing a lot of container churn, do the following:<br><br>
    <tr><th colspan="2" style="text-align: center;"><br>bbs.Domain.cf-apps<br><br></th></tr>
    <tr>
       <th width="25%">Description</th>
-      <td>Indicates if the ‘cf-apps’ domain is up-to-date, meaning that CF App requests 
-          from the Cloud Controller are synchronized to Diego-desired application instances (bbs.LRPsDesired) for execution. 
-          <code>1</code> means the ‘cf-apps’ domain is up-to-date. 
-          <code>0</code> means the ‘cf-apps’ domain is not up-to-date.
+      <td>Indicates if the <code>cf-apps</code> domain is up-to-date, meaning that CF app requests 
+          from the Cloud Controller are synchronized to Diego-desired app instances for execution (<code>bbs.LRPsDesired</code>). 
+            <ul>
+              <li><code>1</code> means the <code>cf-apps</code> domain is up-to-date. </li>
+              <li><code>0</code> means the <code>cf-apps</code> domain is not up-to-date.</li>
+            </ul>
           <br><br>
-          <strong>Use</strong>: ‘cf-apps’ is used to translate the Cloud Controller desired state into Diego implementation. 
+          <strong>Use</strong>: <code>cf-apps</code> is used to translate the Cloud Controller desired state into Diego implementation. 
           If it does not stay up-to-date, then the changes requested in Cloud Controller 
           are not guaranteed to propagate throughout the system. 
-          If the Cloud Controller and Diego are out of sync, then apps running could vary from what is desired.
+          If the Cloud Controller and Diego are out of sync, then running apps may vary from what is desired.
           <br><br>
           <strong>Origin</strong>: Doppler/Firehose<br>
           <strong>Type</strong>: Gauge (Float 0 or 1)<br>
@@ -306,7 +308,7 @@ When observing a lot of container churn, do the following:<br><br>
                     to spin up additional LRPs. 
                         <br><br>
                 <strong>Use</strong>: If Diego has more LRP running than expected, 
-                        there might be problems with the BBS.<br>
+                        there may be problems with the BBS.<br>
                         Deleting an app with many instances can temporarily spike this metric.  
                         However, a sustained spike in <code>bbs.LRPsExtra</code> is unusual and should be investigated.
                  <br><br>
@@ -386,9 +388,9 @@ When observing a lot of container churn, do the following:<br><br>
                 An increase in <code>bbs.CrashedActualLRPs</code> can indicate several problems, 
                 from a bad app with many instances associated, 
                 to a platform issue that is resulting in app crashes. 
-                This metric is most helpful to create a baseline in a deployment. 
-                After a baseline is created, a deployment specific alert can be created to notify of a spike in crashes above trend line. 
-                Alert values should be tuned to the deployment. 
+                Use this metric to help create a baseline for your deployment. 
+                After you have a baseline, you can create a deployment-specific alert to notify of a spike in crashes above the trend line. 
+                Tune alert values to your deployment. 
                 <br><br>
                 <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Gauge (Float)<br>
@@ -422,18 +424,18 @@ When observing a lot of container churn, do the following:<br><br>
      <tr><th colspan="2" style="text-align: center;"><br>1hr average of bbs.LRPsRunning – prior 1hr average of bbs.LRPsRunning<br><br></th></tr>
         <tr>
                 <th width="25%">Description</th>
-                <td>Rate of change in application instances being started or stopped on the platform. 
+                <td>Rate of change in app instances being started or stopped on the platform. 
                     It is derived from <code>bbs.LRPsRunning</code>
                     and represents the total number of LRP instances that are running on cells.
                     <br><br>
-                    <strong>Use</strong>: Delta reflects upward or downward trend for application instances started or stopped. 
+                    <strong>Use</strong>: Delta reflects upward or downward trend for app instances started or stopped. 
                     Helps to provide a picture of the overall growth trend of the environment for capacity planning. 
-                    May want to alert on delta values out of expected range.
+                    You may want to alert on delta values outside of the expected range.
                     <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Gauge (Float)<br>
                  <strong>Frequency</strong>: During event, 
-                         emission should be constant on a running, Diego-based, PCF deployment<br>
+                         emission should be constant on a running deployment<br>
         </tr>
         <tr>
                 <th>Recommended measurement</th>
@@ -557,7 +559,6 @@ When observing a lot of container churn, do the following:<br><br>
                 Because Diego staging Tasks can fail without at least 4&nbsp;GB free, 
                 the recommended red threshold is based on the minimum disk capacity across the deployment
                 falling below 4&nbsp;GB in the previous 5 minutes.
-                across the deployment falling below 4GB in the previous 5 minutes.
                  <br><br>
                  <strong>Origin</strong>: Doppler/Firehose<br>
                  <strong>Type</strong>: Gauge (Integer in bytes)<br>
@@ -704,7 +705,7 @@ When observing a lot of container churn, do the following:<br><br>
                     <br><br>
                     <strong>Use</strong>: Increases in this metric indicate that the route emitter might be having 
                     trouble maintaining an accurate routing table to broadcast to the Gorouters. 
-                    Alerting values need to be tuned per the deployment, based on historical data adjusted based on observations over time. 
+                    Tune alerting values to your deployment based on historical data and adjust based on observations over time. 
                     The suggested starting point is &ge; 10 for the yellow threshold and &ge; 20 for the critical threshold. 
                     Pivotal has observed on its Pivotal Web Services deployment that above 20 s, the BBS may be failing.
                  <br><br>
