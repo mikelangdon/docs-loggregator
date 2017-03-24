@@ -1,26 +1,39 @@
 ---
-title: Deploying and Configuring Nozzles
+title: Consuming Logs and Metrics
 owner: Loggregator
 ---
 
 ## <a id='intro'></a> Introduction
 
-Nozzles are programs which consume data from the Loggregator Firehose. Nozzles can be configured to select, buffer, and transform data, and forward it to other applications and services. For example:
+**Definition: Nozzle**
 
-- The JMX Bridge OpenTSDB Firehose Nozzle, which installs with [JMX Bridge](http://docs.pivotal.io/jmx-bridge)
-- The [Datadog nozzle](https://github.com/cloudfoundry-incubator/datadog-firehose-nozzle) publishes metrics coming from the Firehose to Datadog.
-- The [Syslog nozzle](https://github.com/cloudfoundry-community/firehose-to-syslog) filters out log messages coming from the Firehose and sends it to a syslog server.
+_Nozzles_ are apps that consume logs and metrics from the CF platform and its apps by doing the following:
 
-See our [Nozzle Tutorial](./nozzle-tutorial.html).
+ - Selecting, buffering, and transforming data from the Loggregator Firehose
+ - Forwarding that data to other apps and services. 
 
-This topic describes deploying a
+**How to Consume Data using Nozzles**
+
+If you want to consume log and metric data from CF, you must deploy a Nozzle. You have two options: 
+
+* Use an existing Nozzle, such as the following:
+
+  - The [Datadog nozzle](https://github.com/cloudfoundry-incubator/datadog-firehose-nozzle) publishes metrics to Datadog.
+  - The [Syslog nozzle](https://github.com/cloudfoundry-community/firehose-to-syslog) filters and sends log messages to a syslog server.
+  - The JMX Bridge OpenTSDB Firehose Nozzle installs with [JMX Bridge](http://docs.pivotal.io/jmx-bridge) for PCF and collects and exposes system data from CF components via a JMX endpoint.
+  - A Nozzle provided by a Pivotal Partner, such as the [GCP Stackdriver Nozzle for PCF](https://docs.pivotal.io/partners/gcp-sdn/index.html).
+
+* Write your own Nozzle.
+
+You can learn more about Nozzles, including how to write and deploy them, by following the procedure in the next section: [Deploy an Example Nozzle](#deploy). 
+
+
+## <a id="deploy"></a> Deploy an Example Nozzle
+
+The procedure described below deploys this example nozzle to the Firehose of a Cloud Foundry installation deployed locally with BOSH Lite. This topic describes deploying a
 ["nozzle"](./architecture.html#nozzles) application to the Cloud Foundry (CF)
 [Loggregator Firehose](./architecture.html#firehose).
 The Cloud Foundry Loggregator created an example nozzle application for use with this tutorial.
-
-The procedure described below deploys this example nozzle to the Firehose of a Cloud Foundry installation deployed locally with BOSH Lite.
-
-## <a id="deploy"></a> Deploying
 
 ### Prerequisites
 
@@ -309,9 +322,15 @@ origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177288325
   origin:"MetronAgent" eventType:CounterEvent timestamp:1443046220058280679 deployment:"cf-warden" job:"api_z1" index:"0" ip:"203.0.113.134" counterEvent:<name:"MessageAggregator.uncategorizedEvents" delta:44 total:12891 >
     </pre>
 
-## <a id="config"></a> Configuring
+## <a id="config"></a> Configure a Nozzle
 
-### <a id='slow-noz'></a> Slow Nozzle Alerts ##
+### <a id='scaling-nozzles'></a> Scale
+
+You can scale [nozzles](./architecture.html#nozzles) using the subscription ID, specified when the nozzle connects to the Firehose. If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes events across all instances of the nozzle. For example, if you have two nozzles with the same subscription ID, the Firehose sends half of the events to one nozzle and half to the other. Similarly, if you have three nozzles with the same subscription ID, the Firehose sends each instance one-third of the event traffic.
+
+Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
+
+### <a id='slow-noz'></a> Reduce the Rate of Alerts ##
 
 The [Traffic Controller](./architecture.html#traffic-controller) alerts nozzles if they consume events too slowly.
 If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
@@ -321,9 +340,3 @@ If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
 - **PolicyViolation** error: The Traffic Controller periodically sends `ping` control messages over the Firehose WebSocket connection. If a client does not respond to a `ping` with a `pong` message within 30 seconds, the Traffic Controller closes the WebSocket connection with the WebSocket error code `ClosePolicyViolation (1008)`. The nozzle should intercept this WebSocket close error, alerting the operator to the performance issue.
 
 An operator can scale the number of nozzles in response to these alerts to minimize the loss of data.
-
-### <a id='scaling-nozzles'></a> Scaling Nozzles
-
-You can scale [nozzles](./architecture.html#nozzles) using the subscription ID, specified when the nozzle connects to the Firehose. If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes events across all instances of the nozzle. For example, if you have two nozzles with the same subscription ID, the Firehose sends half of the events to one nozzle and half to the other. Similarly, if you have three nozzles with the same subscription ID, the Firehose sends each instance one-third of the event traffic.
-
-Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
