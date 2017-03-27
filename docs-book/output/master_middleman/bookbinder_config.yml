@@ -3,7 +3,7 @@
   ".": 
 :production_host: hello
 :subnav_templates:
-  myservice: myservice_subnav
+  loggregator: myservice_subnav
 :template_variables: 
 :local_repo_dir: "/Users/ljarzynski/workspace/docs-loggregator"
 :workspace: !ruby/object:Pathname
@@ -11,10 +11,10 @@
 :feedback_enabled: 
 :repo_link_enabled: true
 :repo_links:
-  myservice:
+  loggregator:
     repo: docs-content
     ref: master
     at_path: 
 :product_info:
-  myservice: {}
+  loggregator: {}
 :elastic_search: false

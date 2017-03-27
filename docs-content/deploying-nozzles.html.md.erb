@@ -329,14 +329,3 @@ origin:"syslog_drain_binder" eventType:ValueMetric timestamp:1443046219177288325
 You can scale [nozzles](./architecture.html#nozzles) using the subscription ID, specified when the nozzle connects to the Firehose. If you use the same subscription ID on each nozzle instance, the Firehose evenly distributes events across all instances of the nozzle. For example, if you have two nozzles with the same subscription ID, the Firehose sends half of the events to one nozzle and half to the other. Similarly, if you have three nozzles with the same subscription ID, the Firehose sends each instance one-third of the event traffic.
 
 Stateless nozzles should handle scaling gracefully. If a nozzle buffers or caches the data, the nozzle author must test the results of scaling the number of nozzle instances up or down.
-
-### <a id='slow-noz'></a> Reduce the Rate of Alerts ##
-
-The [Traffic Controller](./architecture.html#traffic-controller) alerts nozzles if they consume events too slowly.
-If a nozzle falls behind, Loggregator alerts the nozzle in two ways:
-
-- **TruncatingBuffer** alerts: If the nozzle consumes messages more slowly than they are produced, the Loggregator system may drop messages. In this case, Loggregator sends the log message, `TB: Output channel too full. Dropped (n) messages`, where "n" is the number of dropped messages. Loggregator also emits a **CounterEvent** with the name `TruncatingBuffer.DroppedMessages`. The nozzle receives both messages from the Firehose, alerting the operator to the performance issue.
-
-- **PolicyViolation** error: The Traffic Controller periodically sends `ping` control messages over the Firehose WebSocket connection. If a client does not respond to a `ping` with a `pong` message within 30 seconds, the Traffic Controller closes the WebSocket connection with the WebSocket error code `ClosePolicyViolation (1008)`. The nozzle should intercept this WebSocket close error, alerting the operator to the performance issue.
-
-An operator can scale the number of nozzles in response to these alerts to minimize the loss of data.
