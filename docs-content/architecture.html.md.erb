@@ -1,0 +1,74 @@
+---
+title: Loggregator Architecture
+owner: Logging and Metrics
+---
+
+# <a id='use-cases'></a> Loggregator Components
+
+<%= image_tag 'loggregator.png' %>
+
+To see a larger version of this diagram, click <a href="./images/architecture/loggregator.png">here</a>.
+
+<p class="note"><strong>Note</strong>: The Loggregator system now uses <a href="http://www.grpc.io/">gRPC</a> for communication between the Metron Agent and the Doppler, and between the Doppler and the Traffic Controller. This improves the stability and the performance of the Loggregator system, but it may require operators to scale their Dopplers.</p>
+
+<table>
+	<tr>
+		<th>Part</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>Source</td>
+		<td>Sources are logging agents that run on the Cloud Foundry components.</td>
+	</tr>
+	<tr>
+		<td>Metron</td>
+		<td>Metron agents are co-located with sources. They collect logs and forward them to the Doppler servers.</td>
+	</tr>
+	<tr>
+		<td>Doppler</td>
+		<td>Dopplers gather logs from the Metron agents, store them in temporary buffers, and forward them to the Traffic Controller or to third party syslog drains.</td>
+	</tr>
+	<tr>
+		<td>Traffic Controller</td>
+		<td>Handles client requests for logs. Gathers and collates messages from all Doppler servers, and provides external API and message translation (as needed for legacy APIs). Exposes the Firehose.</td>
+	</tr>
+	<tr>
+		<td>Firehose</td>
+		<td>TK</td>
+	</tr>
+	<tr>
+		<td>Nozzles</td>
+		<td>TK</td>
+	</tr>
+</table>
+
+
+
+## <a id='firehose'></a>
+
+The Firehose is a WebSocket endpoint which streams all the event data coming from a<%= vars.product_full=='Cloud Foundry' ? "" : "n"  %>  <%= vars.product_full %> deployment. The data stream includes logs, HTTP events and container metrics from all applications, and metrics from all <%= vars.product_full %> system components. Logs from system components such as Cloud Controller are not included in the firehose and are typically accessed via rsyslog configuration.
+
+Because the data coming from the Firehose may contain sensitive information, such as customer information in the application logs, the Firehose is only accessible by users who have the right permissions.
+
+The Traffic Controller serves the Firehose over WebSocket at the `/firehose` endpoint. The events coming out of the Firehose are formatted as protobuf messages conforming to the [dropsonde protocol](https://github.com/cloudfoundry/dropsonde-protocol).
+
+The address of the traffic controller can be discovered by hitting the `info` endpoint on the API and getting the value of the doppler\_logging\_endpoint.
+
+Example output for a BOSH Lite CF environment:
+<pre class='terminal'>
+ $ cf curl /v2/info | jq .doppler\_logging\_endpoint
+ wss://doppler.192.0.2.34.xip.io:443
+</pre>
+
+### <a id='logs-vs-metrics'></a>Difference Between Logs and Metrics
+
+The Firehose carries both logs and metrics, which differ as follows:
+
+* **Metrics**
+  - Report a measurement from or status of a VM at its timestamp time
+  - Follow [dropsonde](https://github.com/cloudfoundry/dropsonde-protocol) or [statsd](https://github.com/etsy/statsd) protocol
+  - Can route to a monitoring platform to trigger alerts
+* **Logs**
+  - Report events detected, actions taken, errors, or any other messages the operator or developer wanted to generate
+  - Follow the syslog standard
+  - Are not used to trigger alerts 
