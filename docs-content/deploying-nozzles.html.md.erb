@@ -7,23 +7,21 @@ owner: Loggregator
 
 **Definition: Nozzle**
 
-_Nozzles_ are apps that consume logs and metrics from the CF platform and its apps by doing the following:
+_Nozzles_ are apps that consume logs and metrics from the CF platform by doing the following:
 
  - Selecting, buffering, and transforming data from the Loggregator Firehose
  - Forwarding that data to other apps and services. 
 
 **How to Consume Data using Nozzles**
 
-If you want to consume log and metric data from CF, you must deploy a Nozzle. You have two options: 
+You can consume log and metric data from CF by deploying a Nozzle. Consider the following options: 
 
-* Use an existing Nozzle, such as the following:
-
-  - The [Datadog nozzle](https://github.com/cloudfoundry-incubator/datadog-firehose-nozzle) publishes metrics to Datadog.
-  - The [Syslog nozzle](https://github.com/cloudfoundry-community/firehose-to-syslog) filters and sends log messages to a syslog server.
-  - The JMX Bridge OpenTSDB Firehose Nozzle installs with [JMX Bridge](http://docs.pivotal.io/jmx-bridge) for PCF and collects and exposes system data from CF components via a JMX endpoint.
-  - A Nozzle provided by a Pivotal Partner, such as the [GCP Stackdriver Nozzle for PCF](https://docs.pivotal.io/partners/gcp-sdn/index.html).
-
-* Write your own Nozzle.
+- **Pivotal JMX Bridge**: The JMX Bridge OpenTSDB Firehose Nozzle installs with [JMX Bridge](http://docs.pivotal.io/jmx-bridge) for PCF and collects and exposes system data from CF components via a JMX endpoint.
+- **Partner Service Tiles**: A Nozzle provided by a Pivotal Partner, such as the [GCP Stackdriver Nozzle for PCF](https://docs.pivotal.io/partners/gcp-sdn/index.html). 
+- **Community-developed Nozzles**: See the following examples. 
+    - The [Datadog nozzle](https://github.com/cloudfoundry-incubator/datadog-firehose-nozzle) publishes metrics to Datadog.
+    - The [Syslog nozzle](https://github.com/cloudfoundry-community/firehose-to-syslog) filters and sends log messages to a syslog server.
+* **Custom**: Write your own Nozzle.
 
 You can learn more about Nozzles, including how to write and deploy them, by following the procedure in the next section: [Deploy an Example Nozzle](#deploy). 
 
