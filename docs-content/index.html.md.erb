@@ -32,3 +32,16 @@ YOUR-PRODUCT-NAME has the following requirements:
 ## <a id="limitations"></a>Limitations
 
 **List any known limitations.**
+
+### <a id='logs-vs-metrics'></a>Difference Between Logs and Metrics
+
+The Firehose carries both logs and metrics, which differ as follows:
+
+* **Metrics**
+  - Report a measurement from or status of a VM at its timestamp time
+  - Follow [dropsonde](https://github.com/cloudfoundry/dropsonde-protocol) or [statsd](https://github.com/etsy/statsd) protocol
+  - Can route to a monitoring platform to trigger alerts
+* **Logs**
+  - Report events detected, actions taken, errors, or any other messages the operator or developer wanted to generate
+  - Follow the syslog standard
+  - Are not used to trigger alerts 

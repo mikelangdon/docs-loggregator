@@ -1,0 +1,7 @@
+The address of the traffic controller can be discovered by hitting the `info` endpoint on the API and getting the value of the doppler\_logging\_endpoint.
+
+Example output for a BOSH Lite CF environment:
+<pre class='terminal'>
+ $ cf curl /v2/info | jq .doppler\_logging\_endpoint
+ wss://doppler.192.0.2.34.xip.io:443
+</pre>
