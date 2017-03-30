@@ -34,11 +34,18 @@ The following table lists the relevant components from the diagram above and how
 	</tr>
 	<tr>
 		<td>Traffic Controller</td>
-		<td>Handles client requests for logs by serving the Firehose over WebSocket at the `/firehose` endpoint. Gathers and collates messages from all Doppler servers, and provides external API and message translation (as needed for legacy APIs). Exposes the Firehose.</td>
+		<td>Handles client requests for logs by serving the Firehose over WebSocket at the <code>/firehose</code> endpoint. Gathers and collates messages from all Doppler servers, and provides external API and message translation (as needed for legacy APIs).</td>
 	</tr>
 	<tr>
 		<td>Firehose</td>
-		<td>The Firehose is a WebSocket endpoint which streams all the event data coming from a deployment. The data stream includes logs, HTTP events and container metrics from all applications, and metrics from all <%= vars.product_full %> system components. Logs from system components such as Cloud Controller are not included in the firehose and are typically accessed via rsyslog configuration. The events coming out of the Firehose are formatted as protobuf messages conforming to the [dropsonde protocol](https://github.com/cloudfoundry/dropsonde-protocol).
+		<td>The Firehose is a WebSocket endpoint that streams all event data coming from a deployment. The data stream includes the following:
+		<ul>
+		<li>logs, HTTP events, and container metrics from all apps</li>  and <li> metrics from all platform components</li> 
+		
+		<p class="note"><strong>Note</strong>: Logs from system components such as Cloud Controller are not included in the firehose and are typically accessed via rsyslog configuration. 
+</p> 
+
+		The events coming out of the Firehose are formatted as protobuf messages conforming to the <a href="https://github.com/cloudfoundry/dropsonde-protocol">dropsonde protocol</a>.
 </td>
 	</tr>
 	<tr>
