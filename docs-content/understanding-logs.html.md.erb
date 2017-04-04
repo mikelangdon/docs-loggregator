@@ -1,0 +1,168 @@
+---
+title: Understanding Cloud Foundry App Logs
+owner: PCF Metrics
+---
+
+<strong><%= modified_date %></strong>
+
+Loggregator, the Cloud Foundry component responsible for logging, provides a
+stream of log output from your app and from Cloud Foundry system
+components that interact with your app during updates and execution.
+
+By default, Loggregator streams logs to your terminal.
+If you want to persist more than the limited amount of logging information that
+Loggregator can buffer, you can drain logs to a third-party log management
+service.
+See [Third-Party Log Management Services](../services/log-management.html).
+
+Cloud Foundry gathers and stores logs in a best-effort manner.
+If a client is unable to consume log lines quickly enough, the Loggregator
+buffer may need to overwrite some lines before the client has consumed them.
+A syslog drain or a CLI tail can usually keep up with the flow of app
+logs.
+
+## <a id='types'></a>Contents of a Log Line ##
+
+Every log line contains four fields:
+
+1. Timestamp
+1. Log type (origin code)
+1. Channel: either `STDOUT` or `STDERR`
+1. Message
+
+Loggregator assigns the timestamp when it receives log data.
+The log data is opaque to Loggregator, which simply puts it in the message field
+of the log line.
+Apps or system components sending log data to Loggregator may include
+their own timestamps, which then appear in the message field.
+
+Origin codes distinguish the different log types.
+Origin codes from system components have three letters.
+The app origin code is `APP` followed by slash and a digit that
+indicates the app instance.
+
+Many frameworks write to an app log that is separate from STDOUT and
+STDERR.
+This is not supported by Loggregator.
+Your app must write to STDOUT or STDERR for its logs to be included in
+the Loggregator stream.
+Check the buildpack your app uses to determine whether it automatically
+insures that your app correctly writes logs to STDOUT and STDERR only.
+Some buildpacks do this, and some do not.
+
+## <a id='format'></a>Log Types and Their Messages ##
+
+Different types of logs have different message formats, as shown in the examples
+below.
+The digit appended to the code indicates the instance index: 0 is the first instance, 1 is the second, and so on.
+
+### <a id='api'></a>API ###
+
+Users make API calls to request changes in app state. Cloud Controller,
+the Cloud Foundry component responsible for the API, logs the actions that Cloud
+Controller takes in response.
+
+For example:
+
+<pre class="terminal">
+2016-06-14T14:10:05.36-0700 [API/0]      OUT Updated app with guid cdabc600-0b73-48e1-b7d2-26af2c63f933 ({"name"=>"spring-music", "instances"=>1, "memory"=>512, "environment_json"=>"PRIVATE DATA HIDDEN"})
+</pre>
+
+### <a id='stg'></a>STG ###
+
+The Diego cell or the Droplet Execution Agent emits STG logs when staging or restaging an app.
+These actions implement the desired state requested by the user.
+After the droplet has been uploaded, STG messages end and CELL or DEA messages begin.
+For STG, the instance index is almost always 0.
+
+For example:
+
+<pre class="terminal">
+2016-06-14T14:10:27.91-0700 [STG/0]      OUT Staging...
+</pre>
+
+### <a id='rtr'></a>RTR ###
+
+The Router emits RTR logs when it routes HTTP requests to the app.
+Router messages include the app name followed by a Router timestamp and
+then selections from the HTTP request.
+
+For example:
+
+<pre class="terminal">
+2016-06-14T10:51:32.51-0700 [RTR/1]      OUT www.example.com - [14/06/2016:17:51:32.459 +0000] "GET /user/ HTTP/1.1" 200 0 103455 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.123 Safari/537.30" 192.0.2.132:46359 x_forwarded_for:"198.51.100.120" x_forwarded_proto:"http" vcap_request_id:9365d216-623a-45cb-6ef6-eba495c19fa8 response_time:0.059468637 app_id:79cc58aa-3737-43ae-ac71-39a2843b5178
+</pre>
+
+#### <a id="traceid"></a> Zipkin Trace Logging
+
+If Zipkin trace logging is enabled in Cloud Foundry, then Gorouter access log messages contain Zipkin HTTP headers. 
+
+The following is an example access log message containing Zipkin headers:
+
+<pre class="terminal">
+2016-11-23T16:04:01.49-0800 [RTR/0]      OUT www.example.com - [24/11/2016:00:04:01.227 +0000] "GET / HTTP/1.1" 200 0 109 "-" "curl/7.43.0" 10.0.2.150:4070 10.0.48.66:60815 x_forwarded_for:"198.51.100.120" x_forwarded_proto:"http" vcap_request_id:87f9d899-c7a4-46cd-7b76-4ec35ce9921b response_time:0.263000966 app_id:8e5d6451-b369-4423-bce8-3a7a9e479dbb app_index:0 x_b3_traceid:"2d5610bf5e0f7241" x_b3_spanid:"2d5610bf5e0f7241" x_b3_parentspanid:"-"
+</pre>
+
+For more information about Zipkin tracing, see the [Zipkin Tracking in HTTP Headers](../../concepts/http-routing.html#zipkin-headers) topic.
+
+### <a id='lgr'></a>LGR ###
+
+Loggregator emits LGR to indicate problems with the logging process.
+Examples include "can't reach syslog drain url" and "dropped log messages due to high rate."
+
+### <a id='app'></a>APP ###
+
+Every app emits logs according to choices by the developer.
+
+For example:
+
+<pre class="terminal">
+2016-06-14T14:10:15.18-0700 [APP/0]      OUT Exit status 0
+</pre>
+
+### <a id="ssh"></a>SSH ###
+
+The Diego cell emits SSH logs when a user accesses an application container through SSH by using the [cf ssh](http://cli.cloudfoundry.org/en-US/cf/ssh.html) command.
+
+For example:
+
+<pre class="terminal">
+2016-06-14T14:16:11.49-0700 [SSH/0]      OUT Successful remote access by 192.0.2.33:7856
+</pre>
+
+### <a id='cell'></a>CELL ###
+
+The Diego cell emits CELL logs when it starts or stops the
+app. These actions implement the desired state requested by the user.
+The Diego cell also emits messages when an app crashes.
+
+For example:
+
+<pre class="terminal">
+2016-06-14T13:44:38.14-0700 [CELL/0]     OUT Successfully created container
+</pre>
+
+
+### <a id='dea'></a>DEA ###
+
+The Droplet Execution Agent emits DEA logs beginning when it starts or stops the
+app.
+These actions implement the desired state requested by the user.
+The DEA also emits messages when an app crashes.
+
+For example:
+
+<pre class="terminal">
+2014-02-13T11:44:52.07-0800 [DEA]     OUT Starting app instance (index 1) with guid e1ca6390-cf78-4fc7-9d86-5b7ed01e9c28
+</pre>
+
+
+## <a id='writing'></a>Writing to the Log from Your App ##
+
+Your app must write logs to `STDERR` or `STDOUT`.
+Both are typically buffered, and you should flush the buffer before delivering
+the message to Loggregator.
+
+Alternatively, you can write log messages to `STDERR` or `STDOUT` synchronously.
+This approach is mainly used for debugging because it may affect app
+performance.
