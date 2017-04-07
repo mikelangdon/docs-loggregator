@@ -3,25 +3,29 @@ title: Understanding Cloud Foundry App Logs
 owner: PCF Metrics
 ---
 
-<strong><%= modified_date %></strong>
+This topic provides details on the contents of app logs for Pivotal Cloud Foundry (PCF) developers.
 
-Loggregator, the Cloud Foundry component responsible for logging, provides a
-stream of log output from your app and from Cloud Foundry system
-components that interact with your app during updates and execution.
+## <a id='types'></a>Overview ##
 
-By default, Loggregator streams logs to your terminal.
-If you want to persist more than the limited amount of logging information that
-Loggregator can buffer, you can drain logs to a third-party log management
-service.
-See [Third-Party Log Management Services](../services/log-management.html).
+* **What data can I view?**<br>
+	* Loggregator streams log output from your app and the PCF system
+	components that interact with your app during updates and execution.
+* **How can I view this data?**: 
+	* You can access this stream using the Cloud Foundry Command Line Interface (cf CLI). See [Viewing Your App Logs](./viewing-app-logs.html).
+* **How can I store this data?**: If you want to store more app logs than the limited amount Loggregator can buffer, you can send logs to a third-party log management service. See [Third-Party Log Management Services](../services/log-management.html).
 
-Cloud Foundry gathers and stores logs in a best-effort manner.
-If a client is unable to consume log lines quickly enough, the Loggregator
-buffer may need to overwrite some lines before the client has consumed them.
-A syslog drain or a CLI tail can usually keep up with the flow of app
-logs.
+<p class="note"><strong>Note</strong>: PCF gathers and stores logs in a best-effort manner. If a client does not consume log lines quickly enough, the Loggregator buffer may overwrite some lines before the client can consume them.
+To prevent Loggregator from overwriting data, you can use a syslog drain or a CLI tail to keep up with the flow of app logs.</p>
 
-## <a id='types'></a>Contents of a Log Line ##
+## <a id='writing'></a>Write to the Log from Your App ##
+
+Your can write to app logs as follows:
+
+* Write to `STDERR` _or_ `STDOUT`. Ensure that you flush the buffer before delivering
+the message to Loggregator.
+*  Write to `STDERR` or `STDOUT` synchronously. You can use this approach for debugging, as it may affect app performance.
+
+## <a id='contents'></a>Contents of a Log Line ##
 
 Every log line contains four fields:
 
@@ -155,14 +159,3 @@ For example:
 <pre class="terminal">
 2014-02-13T11:44:52.07-0800 [DEA]     OUT Starting app instance (index 1) with guid e1ca6390-cf78-4fc7-9d86-5b7ed01e9c28
 </pre>
-
-
-## <a id='writing'></a>Writing to the Log from Your App ##
-
-Your app must write logs to `STDERR` or `STDOUT`.
-Both are typically buffered, and you should flush the buffer before delivering
-the message to Loggregator.
-
-Alternatively, you can write log messages to `STDERR` or `STDOUT` synchronously.
-This approach is mainly used for debugging because it may affect app
-performance.
