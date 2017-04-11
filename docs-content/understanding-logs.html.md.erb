@@ -5,56 +5,52 @@ owner: PCF Metrics
 
 This topic provides details on the contents of app logs for Pivotal Cloud Foundry (PCF) developers.
 
-## <a id='types'></a>Overview ##
-
-* **What data can I view?**<br>
-	* Loggregator streams log output from your app and the PCF system
-	components that interact with your app during updates and execution.
-* **How can I view this data?**: 
-	* You can access this stream using the Cloud Foundry Command Line Interface (cf CLI). See [Viewing Your App Logs](./viewing-app-logs.html).
-* **How can I store this data?**: If you want to store more app logs than the limited amount Loggregator can buffer, you can send logs to a third-party log management service. See [Third-Party Log Management Services](../services/log-management.html).
-
 <p class="note"><strong>Note</strong>: PCF gathers and stores logs in a best-effort manner. If a client does not consume log lines quickly enough, the Loggregator buffer may overwrite some lines before the client can consume them.
 To prevent Loggregator from overwriting data, you can use a syslog drain or a CLI tail to keep up with the flow of app logs.</p>
 
-## <a id='writing'></a>Write to the Log from Your App ##
 
-Your can write to app logs as follows:
+## <a id='types'></a>Overview ##
 
-* Write to `STDERR` _or_ `STDOUT`. Ensure that you flush the buffer before delivering
-the message to Loggregator.
-*  Write to `STDERR` or `STDOUT` synchronously. You can use this approach for debugging, as it may affect app performance.
+* **What logs you can access**:
+	* Loggregator streams log output from your app and the PCF system
+	components that interact with your app during updates and execution.
+* **How you can access your logs**: 
+	* You can access this stream using the Cloud Foundry Command Line Interface (cf CLI). See [Viewing Your App Logs](./viewing-app-logs.html).
+* **How you can store your logs**: 
+	* If you want to store more app logs than the limited amount Loggregator can buffer, you can send logs to a third-party log management service. See [Third-Party Log Management Services](../services/log-management.html).
+* **What data logs include**: 
+	* See [Contents of a Log Line](#contents) and [Log Types](#format).
+* **How you can write to the log from your app**:
+	* You can write to app logs as follows:
+		* Write to `STDERR` _or_ `STDOUT`. Ensure that you flush the buffer before delivering
+		the message to Loggregator.
+		*  Write to `STDERR` or `STDOUT` synchronously. You can use this approach for debugging, as it may affect app performance.
+		<p class="note"><strong>Note</strong>: Check the buildpack your app uses to determine whether it automatically
+insures that your app correctly writes logs to STDOUT and STDERR only.
+Some buildpacks do this, and some do not.</p>
 
 ## <a id='contents'></a>Contents of a Log Line ##
 
-Every log line contains four fields:
+The following table describes the four fields that make up a log line: 
 
-1. Timestamp
-1. Log type (origin code)
-1. Channel: either `STDOUT` or `STDERR`
-1. Message
+<table>
+<tr><th>Field</th><th>Description</th></tr>
+<tr><th>Timestamp</th><td><ul><li>Loggregator assigns the timestamp when it receives log data.</li>
+<li>Apps or system components sending log data to Loggregator may include
+their own timestamps, which then appear in the message field.</li></ul></td></tr>
+<tr><th>Log type</th><td><ul><li>Origin codes distinguish the different log types.</li>
+<li>Origin codes from system components have three letters.</li>
+<li>The app origin code is <code>APP</code> followed by slash and a digit that
+indicates the app instance.</li></ul>
+</td></tr>
+<tr><th>Channel</th><td><ul><li>Either STDERR or STDOUT</li>
+<li>Your app must write to STDOUT or STDERR for its logs to be included in
+the Loggregator stream.</li>
+</td></tr>
+<tr><th>Message</th><td><ul><li>The log data is opaque to Loggregator, which simply puts it in the message field</li></ul></td></tr>
+</table>
 
-Loggregator assigns the timestamp when it receives log data.
-The log data is opaque to Loggregator, which simply puts it in the message field
-of the log line.
-Apps or system components sending log data to Loggregator may include
-their own timestamps, which then appear in the message field.
-
-Origin codes distinguish the different log types.
-Origin codes from system components have three letters.
-The app origin code is `APP` followed by slash and a digit that
-indicates the app instance.
-
-Many frameworks write to an app log that is separate from STDOUT and
-STDERR.
-This is not supported by Loggregator.
-Your app must write to STDOUT or STDERR for its logs to be included in
-the Loggregator stream.
-Check the buildpack your app uses to determine whether it automatically
-insures that your app correctly writes logs to STDOUT and STDERR only.
-Some buildpacks do this, and some do not.
-
-## <a id='format'></a>Log Types and Their Messages ##
+## <a id='format'></a>Log Types ##
 
 Different types of logs have different message formats, as shown in the examples
 below.
