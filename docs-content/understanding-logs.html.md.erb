@@ -5,11 +5,9 @@ owner: PCF Metrics
 
 This topic provides details on the contents of app logs for Pivotal Cloud Foundry (PCF) developers.
 
-<p class="note"><strong>Note</strong>: PCF gathers and stores logs in a best-effort manner. If a client does not consume log lines quickly enough, the Loggregator buffer may overwrite some lines before the client can consume them.
-To prevent Loggregator from overwriting data, you can use a syslog drain or a CLI tail to keep up with the flow of app logs.</p>
+## <a id='intro'></a>Introduction ##
 
-
-## <a id='types'></a>Overview ##
+See the following list to understand the concepts for this topic:
 
 * **What logs you can access**:
 	* Loggregator streams log output from your app and the PCF system
@@ -18,7 +16,7 @@ To prevent Loggregator from overwriting data, you can use a syslog drain or a CL
 	* You can access this stream using the Cloud Foundry Command Line Interface (cf CLI). See [Viewing Your App Logs](./viewing-app-logs.html).
 * **How you can store your logs**: 
 	* If you want to store more app logs than the limited amount Loggregator can buffer, you can send logs to a third-party log management service. See [Third-Party Log Management Services](../services/log-management.html).
-* **What data logs include**: 
+* **What logs include**: 
 	* See [Contents of a Log Line](#contents) and [Log Types](#format).
 * **How you can write to the log from your app**:
 	* You can write to app logs as follows:
@@ -43,18 +41,16 @@ their own timestamps, which then appear in the message field.</li></ul></td></tr
 <li>The app origin code is <code>APP</code> followed by slash and a digit that
 indicates the app instance.</li></ul>
 </td></tr>
-<tr><th>Channel</th><td><ul><li>Either STDERR or STDOUT</li>
-<li>Your app must write to STDOUT or STDERR for its logs to be included in
-the Loggregator stream.</li>
+<tr><th>Channel</th><td><ul><li>Either STDERR or STDOUT.</li></ul>
 </td></tr>
-<tr><th>Message</th><td><ul><li>The log data is opaque to Loggregator, which simply puts it in the message field</li></ul></td></tr>
+<tr><th>Message</th><td><ul><li>The log data is opaque to Loggregator, which simply puts it in the message field.</li></ul></td></tr>
 </table>
 
 ## <a id='format'></a>Log Types ##
 
-Different types of logs have different message formats, as shown in the examples
-below.
-The digit appended to the code indicates the instance index: 0 is the first instance, 1 is the second, and so on.
+The following sections describe the different types of logs and their message formats.
+
+<p class="note"><strong>Note</strong>: In the log message examples below, the digit appended to the origin code indicates the instance index: <code>0</code> is the first instance, <code>1</code> is the second, and so on.</p>
 
 ### <a id='api'></a>API ###
 

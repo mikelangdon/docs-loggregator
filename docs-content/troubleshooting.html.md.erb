@@ -5,3 +5,6 @@ Example output for a BOSH Lite CF environment:
  $ cf curl /v2/info | jq .doppler\_logging\_endpoint
  wss://doppler.192.0.2.34.xip.io:443
 </pre>
+
+<p class="note"><strong>Note</strong>: PCF gathers and stores logs in a best-effort manner. If a client does not consume log lines quickly enough, the Loggregator buffer may overwrite some lines before the client can consume them.
+To prevent Loggregator from overwriting data, you can use a syslog drain or a CLI tail to keep up with the flow of app logs.</p>

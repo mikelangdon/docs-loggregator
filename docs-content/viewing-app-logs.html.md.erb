@@ -3,16 +3,17 @@ title: Viewing Your App Logs
 owner: PCF Metrics
 ---
 
-<strong><%= modified_date %></strong>
+This topic describes how developers can view app logs in Pivotal Cloud Foundry (PCF) using the Cloud Foundry Command Line Interface (cf CLI). 
 
-## <a id='view'></a>Viewing Logs in the Command Line Interface ##
+## <a id='view'></a>View Logs with the cf CLI ##
 
-You view logs in the CLI using the [cf logs](http://cli.cloudfoundry.org/en-US/cf/logs.html) command.
-You can tail, dump, or filter log output.
+Loggregator streams log output from your app and the PCF system components that interact with your app during updates and execution. You can view this stream with cf CLI by using the [cf logs](http://cli.cloudfoundry.org/en-US/cf/logs.html) command to `tail`, `dump`, or `filter` log output.
 
-### <a id="tail-log"></a>Tailing Logs ###
+See [Understanding Cloud Foundry App Logs](./understanding-logs.html) for more information. 
 
-`cf logs APP_NAME` streams Loggregator output to the terminal.
+### <a id="tail-log"></a>Tail Logs ###
+
+Run `cf logs APP_NAME` to stream Loggregator output to the terminal.
 
 For example:
 
@@ -26,17 +27,18 @@ Connected, tailing logs for app spring-music in org example / space development 
     ...
 </pre>
 
-Use **Ctrl-C** (^C) to exit the real-time stream.
+Exit the real-time stream with **Ctrl-c**.
 
-### <a id="dump-log"></a>Dumping Logs ###
+### <a id="dump-log"></a>Dump Logs ###
 
-`cf logs APP_NAME --recent` displays all the lines in the Loggregator buffer.
+Run `cf logs APP_NAME --recent` to display all the lines in the Loggregator buffer.
 
-### <a id="filter"></a>Filtering Logs ###
+### <a id="filter"></a>Filter Logs ###
 
-To view some subset of log output, use `cf logs` in conjunction with filtering
+To view a subset of log output, run `cf logs` in with filtering
 commands of your choice.
-In the example below, `grep -v` excludes all Router logs:
+
+The example command below uses `grep -v` to exclude all Router logs:
 
 <pre class="terminal">
 $ cf logs spring-music --recent | grep -v RTR
